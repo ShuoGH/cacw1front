@@ -6,10 +6,11 @@ export default class Home extends Component {
     return (
       <div className="Home">
         <div className="lander">
-          <h1>Scratch</h1>
-          <p>A simple note taking app or projects management app</p>
+          <h1>Cloud</h1>
+          <p>A simple infomation management system</p>
         </div>
       </div>
     );
   }
 }
+//render on time in response to the http request 
