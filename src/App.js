@@ -33,9 +33,17 @@ async componentDidMount() {
 userHasAuthenticated = authenticated => {
   this.setState({ isAuthenticated: authenticated });
 }
-handleLogout = event => {
+// handleLogout = event => {
+//   this.userHasAuthenticated(false);
+// }
+//this can't make the the app keep log out. so it change to this code below 
+handleLogout = async event => {
+  await Auth.signOut();
+
   this.userHasAuthenticated(false);
 }
+//this can clear the session on log out
+
 render() {
   const childProps = {
       isAuthenticated: this.state.isAuthenticated,
