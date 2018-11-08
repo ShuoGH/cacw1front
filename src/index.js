@@ -23,13 +23,17 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: "notes",
+        name: "prjects",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION
       },
     ]
   }
 });
+//add the amplify to connect the backend 
+//the auth refers to the Cognito
+//the storage refers to the S2 bucket
+//the API refers to the API gateway
 
 ReactDOM.render(
   <Router>
