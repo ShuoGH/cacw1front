@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
@@ -41,6 +41,7 @@ handleLogout = async event => {
   await Auth.signOut();
 
   this.userHasAuthenticated(false);
+  this.props.history.push("/login");
 }
 //this can clear the session on log out
 
@@ -80,4 +81,4 @@ render() {
 }
 }
 
-export default App;
+export default withRouter(App);

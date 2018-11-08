@@ -24,16 +24,17 @@ export default class Login extends Component {
     });
   }
 
-handleSubmit = async event => {
-  event.preventDefault();
+  handleSubmit = async event => {
+    event.preventDefault();
 
-  try {
-    await Auth.signIn(this.state.email, this.state.password);
-    this.props.userHasAuthenticated(true);
-  } catch (e) {
-    alert(e.message);
+    try {
+      await Auth.signIn(this.state.email, this.state.password);
+      this.props.userHasAuthenticated(true);
+      this.props.history.push("/");
+    } catch (e) {
+      alert(e.message);
+    }
   }
-}
 //i change the element in the page. change the email to the username
   render() {
     return (
