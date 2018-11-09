@@ -70,11 +70,11 @@ export default class Login extends Component {
             text="Login"
             loadingText="Logging in…"
           />
-          <Button block bsSize="small" onClick>Forget Password</Button>
+          <Button block bsSize="small" >Forget Password</Button>
         </form>
       </div>
     );
   }
 }
 
-//1. add the forget password button but didn't add the logic to realize it. onClick function. 09/11
+//1. add the forget password button but didn't add the logic to realize it. should add a onClick function. ---17:50 09-11-2018

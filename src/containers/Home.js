@@ -61,6 +61,7 @@ export default class Home extends Component {
             </LinkContainer>
     );
   }
+  //when the i ==0, create the item which is the "create a new project" ---18:18 09-11-2018
 
   renderLander() {
     return (
@@ -90,5 +91,8 @@ export default class Home extends Component {
       </div>
     );
   }
-  //this return include renderNots and renderLander. so this is the render function and output the html
+  //if is authenticated, render notes list, else then render the lander 
 }
+
+//1. there must be some problems here. I should correct the function of rendering the notelists to make it display all the time.
+// ---18:14 09-11-2018

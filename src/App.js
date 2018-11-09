@@ -30,14 +30,11 @@ class App extends Component {
 
     this.setState({ isAuthenticating: false });
   }
-//this is used to update the flag 
+//this is used to update the flag which is used to indicate whether user has logged in 
 userHasAuthenticated = authenticated => {
   this.setState({ isAuthenticated: authenticated });
 }
-// handleLogout = event => {
-//   this.userHasAuthenticated(false);
-// }
-//this can't make the the app keep log out. so it change to this code below 
+
 handleLogout = async event => {
   await Auth.signOut();
 
@@ -45,6 +42,7 @@ handleLogout = async event => {
   this.props.history.push("/");
 }
 //this can clear the session on log out
+//and return to the home page of the application 
 
 render() {
   const childProps = {
@@ -86,6 +84,6 @@ render() {
   );
 }
 }
-
 export default withRouter(App);
-//going to create a new page of listing the profile of users.
+// ? : ----the expression of "if then else" 
+//1. going to create a new page of listing the profile of users.
