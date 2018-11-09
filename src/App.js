@@ -6,29 +6,30 @@ import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 
+//use class to create a react component.
+//it's the sub class of react.component. we also define the render() in the last.
 class App extends Component {
-constructor(props) {
-  super(props);
-
-  this.state = {
-    isAuthenticated: false,
-    isAuthenticating: true
-    //first initializes the isAuthenticated flag in the app's flag 
-  };
-}
-async componentDidMount() {
-  try {
-    await Auth.currentSession();
-    this.userHasAuthenticated(true);
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuthenticated: false,
+      isAuthenticating: true
+      //first initializes the isAuthenticated flag in the app's flag 
+    };
   }
-  catch(e) {
-    if (e !== 'No current user') {
-      alert(e);
+  async componentDidMount() {
+    try {
+      await Auth.currentSession();
+      this.userHasAuthenticated(true);
     }
-  }
+    catch(e) {
+      if (e !== 'No current user') {
+        alert(e);
+      }
+    }
 
-  this.setState({ isAuthenticating: false });
-}
+    this.setState({ isAuthenticating: false });
+  }
 //this is used to update the flag 
 userHasAuthenticated = authenticated => {
   this.setState({ isAuthenticated: authenticated });
@@ -80,5 +81,5 @@ render() {
   );
 }
 }
-
+//i can change a lot of the components list above 
 export default withRouter(App);

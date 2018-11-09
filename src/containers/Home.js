@@ -35,25 +35,27 @@ export default class Home extends Component {
   //this is the url when you invoke your api.
   //my GET http requestion is the ..../prod/projects
 
+
+//below are all the content which need to be loaded 
   renderNotesList(notes) {
     return [{}].concat(notes).map(
-      (note, i) =>
+      (project, i) =>
         i !== 0
           ? <LinkContainer
-              key={note.noteId}
-              to={`/nodes/${note.noteId}`}
+              key={project.projectid}
+              to={`/projects/${project.projectid}`}
             >
-              <ListGroupItem header={note.content.trim().split("\n")[0]}>
-                {"Created: " + new Date(note.createdAt).toLocaleString()}
+              <ListGroupItem header={project.content.trim().split("\n")[0]}>
+                {"Created: " + new Date(project.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
           : <LinkContainer
               key="new"
-              to="/notes/new"
+              to="/projects/new"
             >
               <ListGroupItem>
                 <h4>
-                  <b>{"\uFF0B"}</b> Create a new note
+                  <b>{"\uFF0B"}</b> Create a new project
                 </h4>
               </ListGroupItem>
             </LinkContainer>
@@ -84,8 +86,9 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}
+        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}   
       </div>
     );
   }
+  //this return include renderNots and renderLander. so this is the render function and output the html
 }

@@ -59,11 +59,11 @@ export default class NewNote extends Component {
   }
 
   createNote(note) {
-    return API.post("notes", "/projects", {
+    return API.post("projects", "/projects", {
       body: note
     });
   }
-
+//the projects api is the api endpoint i want invoke.
   render() {
     return (
       <div className="NewNote">

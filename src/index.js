@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';  
+import ReactDOM from 'react-dom';   //use to render the components. and it's different with DOM of browser
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -32,9 +32,9 @@ Amplify.configure({
 });
 //add the amplify to connect the backend 
 //the auth refers to the Cognito
-//the storage refers to the S2 bucket
+//the storage refers to the S3 bucket
 //the API refers to the API gateway.  
-//my api is "projects" my single api...
+//my api is "projects"， this is my single api...
 
 ReactDOM.render(
   <Router>
