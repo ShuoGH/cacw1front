@@ -42,7 +42,7 @@ handleLogout = async event => {
   await Auth.signOut();
 
   this.userHasAuthenticated(false);
-  this.props.history.push("/login");
+  this.props.history.push("/");
 }
 //this can clear the session on log out
 
@@ -63,7 +63,12 @@ render() {
         <Navbar.Collapse>
           <Nav pullRight>
             {this.state.isAuthenticated
-              ? <NavItem onClick={this.handleLogout}>Logout</NavItem>
+              ? <Fragment>
+              <NavItem onClick={this.handleLogout}>Logout</NavItem>
+              <LinkContainer to="/projects/new">
+              <NavItem>Profile</NavItem>
+              </LinkContainer>
+                </Fragment>
               : <Fragment>
                 <LinkContainer to="/signup">
                   <NavItem>Signup</NavItem>
@@ -81,5 +86,6 @@ render() {
   );
 }
 }
-//i can change a lot of the components list above 
+
 export default withRouter(App);
+//going to create a new page of listing the profile of users.

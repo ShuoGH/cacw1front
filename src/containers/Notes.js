@@ -4,37 +4,27 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Notes.css";
-import { s3Upload } from "../libs/awsLib";
 
 export default class Notes extends Component {
   constructor(props) {
     super(props);
-
-    this.file = null;
 
     this.state = {
       isLoading: null,
       isDeleting: null,
       note: null,
       content: "",
-      attachmentURL: null
     };
   }
 
   async componentDidMount() {
     try {
-      let attachmentURL;
       const note = await this.getNote();
-      const { content, attachment } = note;
-
-      if (attachment) {
-        attachmentURL = await Storage.vault.get(attachment);
-      }
+      const { content } = note;
 
       this.setState({
         note,
         content,
-        attachmentURL
       });
     } catch (e) {
       alert(e);
@@ -44,23 +34,14 @@ export default class Notes extends Component {
   getNote() {
     return API.get("projects", `/projects/${this.props.match.params.id}`);
   }
-  //this is going to add 
   validateForm() {
     return this.state.content.length > 0;
-  }
-
-  formatFilename(str) {
-    return str.replace(/^\w+-/, "");
   }
 
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
-  }
-
-  handleFileChange = event => {
-    this.file = event.target.files[0];
   }
 
   saveNote(note) {
@@ -70,20 +51,13 @@ export default class Notes extends Component {
   }
 
   handleSubmit = async event => {
-    let attachment;
-
     event.preventDefault();
 
     this.setState({ isLoading: true });
 
     try {
-      if (this.file) {
-        attachment = await s3Upload(this.file);
-      }
-
       await this.saveNote({
         content: this.state.content,
-        attachment: attachment || this.state.note.attachment
       });
       this.props.history.push("/");
     } catch (e) {
@@ -130,24 +104,8 @@ export default class Notes extends Component {
                 componentClass="textarea"
               />
             </FormGroup>
-            {this.state.note.attachment &&
-              <FormGroup>
-                <ControlLabel>Attachment</ControlLabel>
-                <FormControl.Static>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={this.state.attachmentURL}
-                  >
-                    {this.formatFilename(this.state.note.attachment)}
-                  </a>
-                </FormControl.Static>
-              </FormGroup>}
-            <FormGroup controlId="file">
-              {!this.state.note.attachment &&
-                <ControlLabel>Attachment</ControlLabel>}
-              <FormControl onChange={this.handleFileChange} type="file" />
-            </FormGroup>
+
+
             <LoaderButton
               block
               bsStyle="primary"
@@ -167,8 +125,11 @@ export default class Notes extends Component {
               text="Delete"
               loadingText="Deleting…"
             />
+
           </form>}
       </div>
     );
   }
 }
+
+//1. delete the code related to the file uploading

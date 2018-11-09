@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button,FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Auth } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
@@ -47,6 +47,7 @@ export default class Login extends Component {
             <ControlLabel>Username</ControlLabel>   
             <FormControl
               autoFocus
+              placeholder="Enter username"
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -55,6 +56,7 @@ export default class Login extends Component {
             <ControlLabel>Password</ControlLabel>
             <FormControl
               value={this.state.password}
+              placeholder="Enter password"
               onChange={this.handleChange}
               type="password"
             />
@@ -68,8 +70,11 @@ export default class Login extends Component {
             text="Login"
             loadingText="Logging in…"
           />
+          <Button block bsSize="small" onClick>Forget Password</Button>
         </form>
       </div>
     );
   }
 }
+
+//1. add the forget password button but didn't add the logic to realize it. onClick function. 09/11
