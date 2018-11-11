@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
-import "./Notes.css";
+import "./Projects.css";
+import { LinkContainer } from "react-router-bootstrap";
 
-export default class Notes extends Component {
+export default class Projects extends Component {
   constructor(props) {
     super(props);
 
@@ -94,7 +95,7 @@ export default class Notes extends Component {
   }
   render() {
     return (
-      <div className="Notes">
+      <div className="Projects">
         {this.state.note &&
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="content">
@@ -105,9 +106,9 @@ export default class Notes extends Component {
               />
             </FormGroup>
 
-
+            <ButtonToolbar>
             <LoaderButton
-              block
+              
               bsStyle="primary"
               bsSize="large"
               disabled={!this.validateForm()}
@@ -117,7 +118,7 @@ export default class Notes extends Component {
               loadingText="Saving…"
             />
             <LoaderButton
-              block
+              
               bsStyle="danger"
               bsSize="large"
               isLoading={this.state.isDeleting}
@@ -125,11 +126,21 @@ export default class Notes extends Component {
               text="Delete"
               loadingText="Deleting…"
             />
-
+            <LinkContainer to="/">
+            <LoaderButton
+              
+              bsStyle="default"
+              bsSize="large"
+              onClick={this.routechange}
+              text="Back"
+              loadingText="Returning…"
+            />
+            </LinkContainer>
+            </ButtonToolbar>
           </form>}
       </div>
     );
   }
 }
 
-//1. delete the code related to the file uploading
+//1. add a new button in the projects page.

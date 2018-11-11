@@ -1,18 +1,12 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
-// import config from "../config";
-//config is also not used 
-import "./NewNote.css";
+import LoaderButton from "../components/LoaderButton"; 
+import "./NewProject.css";
 import { API } from "aws-amplify";
-// import { s3Upload } from "../libs/awsLib"
 
 export default class NewNote extends Component {
   constructor(props) {
     super(props);
-
-    // this.file = null;
-
     this.state = {
       isLoading: null,
       content: ""
@@ -29,27 +23,14 @@ export default class NewNote extends Component {
     });
   }
 
-  // handleFileChange = event => {
-  //   this.file = event.target.files[0];
-  // }
 
   handleSubmit = async event => {
     event.preventDefault();
 
-    // if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-    //   alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
-    //   return;
-    // }
-
     this.setState({ isLoading: true });
 
     try {
-      // const attachment = this.file
-      //   ? await s3Upload(this.file)
-      //   : null;
-
       await this.createNote({
-        // attachment,
         content: this.state.content
       });
       this.props.history.push("/");
@@ -67,7 +48,7 @@ export default class NewNote extends Component {
 //the projects api is the api endpoint i want invoke.
   render() {
     return (
-      <div className="NewNote">
+      <div className="NewProject">
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="content">
             <FormControl
@@ -77,7 +58,7 @@ export default class NewNote extends Component {
             />
           </FormGroup>
           <LoaderButton
-            block
+            className="pull-right"
             bsStyle="primary"
             bsSize="large"
             disabled={!this.validateForm()}
@@ -91,4 +72,4 @@ export default class NewNote extends Component {
     );
   }
 }
-//1. delete the file uploading function
+//1. modify the button style to create.---16:20 11-11-2018

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { Nav, Navbar, NavItem, NavDropdown,MenuItem } from "react-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
@@ -64,10 +64,18 @@ render() {
           <Nav pullRight>
             {this.state.isAuthenticated
               ? <Fragment>
-              <NavItem onClick={this.handleLogout}>Logout</NavItem>
-              <LinkContainer to="/">
-              <NavItem>Projects</NavItem>
+              <NavDropdown title="User" id="Navdropdown">
+              <LinkContainer exact to="/" activeClassName=""> 
+              <MenuItem eventkey="1">User Profile</MenuItem>
               </LinkContainer>
+              <LinkContainer exact to="/" activeClassName="">
+              <MenuItem eventkey="2">Projects</MenuItem>
+              </LinkContainer>
+              <MenuItem divider />
+              <LinkContainer exact to="/" activeClassName="">
+              <MenuItem eventkey="3" onClick={this.handleLogout}>Logout</MenuItem>
+              </LinkContainer>
+              </NavDropdown>
                 </Fragment>
               : <Fragment>
                 <LinkContainer to="/signup">
@@ -87,10 +95,6 @@ render() {
 }
 }
 export default withRouter(App);
-// ? : ----the expression of "if then else" 
-//1. going to create a new page of listing the profile of users.
-//2. can handle the problem of can't loading the prjects list after refreshing. so cancel the dropdown button. 
-    // <NavDropdown title="User" id="nav-dropdown">
-    // <MenuItem eventkey="1" href="/">Profile</MenuItem>
-    // <MenuItem eventkey="2" href="/">Projects</MenuItem>
-    // </NavDropdown>
+//expression: ? : is the expression of "if then else" 
+//1. use the dropdown menu to list the option which user can choose. see the profile and the projects, and can choose to logout 
+//2. going to create a new page of listing the profile of users fron the dynamoDB ---15:54 11-11-2018

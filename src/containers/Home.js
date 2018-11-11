@@ -10,7 +10,7 @@ export default class Home extends Component {
 
     this.state = {
       isLoading: true,
-      notes: []
+      project: []
     };
   }
 
@@ -20,8 +20,8 @@ export default class Home extends Component {
     }
 
     try {
-      const notes = await this.notes();
-      this.setState({ notes });
+      const project = await this.projects();
+      this.setState({ project });
     } catch (e) {
       alert(e);
     }
@@ -29,7 +29,7 @@ export default class Home extends Component {
     this.setState({ isLoading: false });
   }
 
-  notes() {
+  projects() {
     console.log("to get the api")
     return API.get("projects", "/projects");
   }
@@ -37,8 +37,8 @@ export default class Home extends Component {
   //my GET http requestion is the ..../prod/projects
 
 //below are all the content which need to be loaded 
-  renderNotesList(notes) {
-    return [{}].concat(notes).map(
+  renderProjectsList(projects) {
+    return [{}].concat(projects).map(
       (project, i) =>
         i !== 0
           ? <LinkContainer
@@ -73,12 +73,12 @@ export default class Home extends Component {
     );
   }
 
-  renderNotes() {
+  renderProjects() {
     return (
-      <div className="notes">
+      <div className="projects">
         <PageHeader>Your Projects</PageHeader>
         <ListGroup>
-          {!this.state.isLoading && this.renderNotesList(this.state.notes)} 
+          {!this.state.isLoading && this.renderProjectsList(this.state.project)} 
         </ListGroup>
       </div>
     );
@@ -87,10 +87,10 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
-        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}   
+        {this.props.isAuthenticated ? this.renderProjects() : this.renderLander()}   
       </div>
     );
   }
-  //if is authenticated, render notes list, else then render the lander 
+  //if is authenticated, render projects list, else then render the lander. 
 }
 
