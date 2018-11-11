@@ -65,7 +65,7 @@ render() {
             {this.state.isAuthenticated
               ? <Fragment>
               <NavDropdown title="User" id="Navdropdown">
-              <LinkContainer exact to="/" activeClassName=""> 
+              <LinkContainer exact to="/Profile" activeClassName=""> 
               <MenuItem eventkey="1">User Profile</MenuItem>
               </LinkContainer>
               <LinkContainer exact to="/" activeClassName="">

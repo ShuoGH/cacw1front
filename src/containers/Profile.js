@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { API } from "aws-amplify";
 import { FormGroup, FormControl, ButtonToolbar} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-// import config from "../config";
-import "./Projects.css";
+import "./Profile.css";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default class Projects extends Component {
@@ -12,19 +11,17 @@ export default class Projects extends Component {
 
     this.state = {
       isLoading: null,
-      isDeleting: null,
-      project: null,
       content: "",
     };
   }
 
   async componentDidMount() {
     try {
-      const project = await this.getProject();
-      const { content } = project;
+      const profile = await this.getProfile();
+      const { content } = profile;
 
       this.setState({
-        project,
+        profile,
         content,
       });
     } catch (e) {
@@ -32,11 +29,8 @@ export default class Projects extends Component {
     }
   }
 
-  getProject() {
-    return API.get("projects", `/projects/${this.props.match.params.id}`);
-  }
-  validateForm() {
-    return this.state.content.length > 0;
+  getProfile() {
+    return API.get("staff", `/staff/${this.props.match.params.id}`);
   }
 
   handleChange = event => {
@@ -45,8 +39,8 @@ export default class Projects extends Component {
     });
   }
 
-  saveProject(project) {
-    return API.put("projects", `/projects/${this.props.match.params.id}`, {
+  saveProfile(project) {
+    return API.put("staff", `/staff/${this.props.match.params.id}`, {
       body: project
     });
   }
@@ -67,32 +61,6 @@ export default class Projects extends Component {
     }
   }
 
-
-  deleteProject() {
-    return API.del("projects", `/projects/${this.props.match.params.id}`);
-  }
-
-  handleDelete = async event => {
-    event.preventDefault();
-
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this project?"
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
-    this.setState({ isDeleting: true });
-
-    try {
-      await this.deleteProject();
-      this.props.history.push("/");
-    } catch (e) {
-      alert(e);
-      this.setState({ isDeleting: false });
-    }
-  }
   render() {
     return (
       <div className="Projects">
@@ -143,4 +111,4 @@ export default class Projects extends Component {
   }
 }
 
-//1. add a new button in the projects page.
+//1. to create a page containing the profile of user ---16:55 11-11-2018
