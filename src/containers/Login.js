@@ -8,16 +8,16 @@ export default class Login extends Component {
   constructor(props) {
   //create a state obj to store what the user enters in the form
     super(props);
-  //the form contains the email and the password. //maybe i should change the email to username
+  //the form contains the username and the password. 
     this.state = {
       isLoading:false,
-      email: "",
+      username: "",
       password: ""
     };
   }
   //validform to check the input
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -32,7 +32,7 @@ export default class Login extends Component {
     this.setState({isLoading:true});
 
     try {
-      await Auth.signIn(this.state.email, this.state.password);
+      await Auth.signIn(this.state.username, this.state.password);
       this.props.userHasAuthenticated(true);
     } catch (e) {
       alert(e.message);
@@ -40,17 +40,17 @@ export default class Login extends Component {
       console.log("after login the isloading state is:",this.state.isLoading);   //output the state of isloading.
       console.log("after login the authenticated state is:",this.state.isLoading);   //output the state of authenticated state 
   }
-//i change the element in the page. change the email to the username
+
   render() {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
+          <FormGroup controlId="username" bsSize="large">
             <ControlLabel>Username</ControlLabel>   
             <FormControl
               autoFocus
               placeholder="Enter username"
-              value={this.state.email}
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </FormGroup>
