@@ -22,7 +22,6 @@ export default class Home extends Component {
     try {
       const notes = await this.notes();
       this.setState({ notes });
-      console.log("this is the try")
     } catch (e) {
       alert(e);
     }
@@ -36,7 +35,6 @@ export default class Home extends Component {
   }
   //this is the url when you invoke your api.
   //my GET http requestion is the ..../prod/projects
-
 
 //below are all the content which need to be loaded 
   renderNotesList(notes) {
@@ -96,5 +94,3 @@ export default class Home extends Component {
   //if is authenticated, render notes list, else then render the lander 
 }
 
-//1. there must be some problems here. I should correct the function of rendering the notelists to make it display all the time.
-// ---18:14 09-11-2018
