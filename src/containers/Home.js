@@ -30,6 +30,7 @@ export default class Home extends Component {
   }
 
   notes() {
+    console.log("get the API, and the state of auth and the isLoading:",this.props.isAuthenticated,this.state.isLoading)
     return API.get("projects", "/projects");
   }
   //this is the url when you invoke your api.
@@ -74,21 +75,24 @@ export default class Home extends Component {
   }
 
   renderNotes() {
+    console.log("rendering the Notes...")
     return (
       <div className="notes">
         <PageHeader>Your Projects</PageHeader>
         <ListGroup>
-          {!this.state.isLoading && this.renderNotesList(this.state.notes)} 
+          {this.renderNotesList(this.state.notes)} 
         </ListGroup>
       </div>
     );
   }
 
   render() {
+    console.log("isAuthenticated:",this.props.isAuthenticated,"isloading",this.state.isLoading)
     return (
       <div className="Home">
-        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}   
+        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}       
       </div>
+
     );
   }
   //if is authenticated, render notes list, else then render the lander 

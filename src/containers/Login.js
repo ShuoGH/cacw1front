@@ -37,6 +37,8 @@ export default class Login extends Component {
     } catch (e) {
       alert(e.message);
     }
+      console.log("after login the isloading state is:",this.state.isLoading);   //output the state of isloading.
+      console.log("after login the authenticated state is:",this.state.isLoading);   //output the state of authenticated state 
   }
 //i change the element in the page. change the email to the username
   render() {

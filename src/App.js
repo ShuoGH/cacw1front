@@ -20,7 +20,9 @@ class App extends Component {
   async componentDidMount() {
     try {
       await Auth.currentSession();
+      console.log("checking the session")
       this.userHasAuthenticated(true);
+      console.log("checked the session")
     }
     catch(e) {
       if (e !== 'No current user') {
@@ -63,8 +65,8 @@ render() {
             {this.state.isAuthenticated
               ? <Fragment>
               <NavItem onClick={this.handleLogout}>Logout</NavItem>
-              <LinkContainer to="/projects/new">
-              <NavItem>Profile</NavItem>
+              <LinkContainer to="/">
+              <NavItem>Projects</NavItem>
               </LinkContainer>
                 </Fragment>
               : <Fragment>
@@ -87,3 +89,9 @@ render() {
 export default withRouter(App);
 // ? : ----the expression of "if then else" 
 //1. going to create a new page of listing the profile of users.
+//2. can handle the problem of can't loading the prjects list after refreshing. so cancel the dropdown button. 
+    // <NavDropdown title="User" id="nav-dropdown">
+    // <MenuItem eventkey="1" href="/">Profile</MenuItem>
+    // <MenuItem eventkey="2" href="/">Projects</MenuItem>
+    // </NavDropdown>
+3. this is new branch 
