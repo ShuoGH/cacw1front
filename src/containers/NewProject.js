@@ -5,7 +5,7 @@ import "./NewProject.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default class NewNote extends Component {
+export default class NewProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ export default class NewNote extends Component {
     this.setState({ isLoading: true });
 
     try {
-      await this.createNote({
+      await this.createProject({
         content: this.state.content
       });
       this.props.history.push("/");
@@ -41,9 +41,9 @@ export default class NewNote extends Component {
     }
   }
 
-  createNote(note) {
+  createProject(project) {
     return API.post("projects", "/projects", {
-      body: note
+      body: project
     });
   }
 //the projects api is the api endpoint i want invoke.

@@ -13,18 +13,18 @@ export default class Projects extends Component {
     this.state = {
       isLoading: null,
       isDeleting: null,
-      note: null,
+      project: null,
       content: "",
     };
   }
 
   async componentDidMount() {
     try {
-      const note = await this.getNote();
-      const { content } = note;
+      const project = await this.getProject();
+      const { content } = project;
 
       this.setState({
-        note,
+        project,
         content,
       });
     } catch (e) {
@@ -32,7 +32,7 @@ export default class Projects extends Component {
     }
   }
 
-  getNote() {
+  getProject() {
     return API.get("projects", `/projects/${this.props.match.params.id}`);
   }
   validateForm() {
@@ -45,9 +45,9 @@ export default class Projects extends Component {
     });
   }
 
-  saveNote(note) {
+  saveProject(project) {
     return API.put("projects", `/projects/${this.props.match.params.id}`, {
-      body: note
+      body: project
     });
   }
 
@@ -57,7 +57,7 @@ export default class Projects extends Component {
     this.setState({ isLoading: true });
 
     try {
-      await this.saveNote({
+      await this.saveProject({
         content: this.state.content,
       });
       this.props.history.push("/");
@@ -68,7 +68,7 @@ export default class Projects extends Component {
   }
 
 
-  deleteNote() {
+  deleteProject() {
     return API.del("projects", `/projects/${this.props.match.params.id}`);
   }
 
@@ -76,7 +76,7 @@ export default class Projects extends Component {
     event.preventDefault();
 
     const confirmed = window.confirm(
-      "Are you sure you want to delete this note?"
+      "Are you sure you want to delete this project?"
     );
 
     if (!confirmed) {
@@ -86,7 +86,7 @@ export default class Projects extends Component {
     this.setState({ isDeleting: true });
 
     try {
-      await this.deleteNote();
+      await this.deleteProject();
       this.props.history.push("/");
     } catch (e) {
       alert(e);
@@ -96,7 +96,7 @@ export default class Projects extends Component {
   render() {
     return (
       <div className="Projects">
-        {this.state.note &&
+        {this.state.project &&
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="content">
               <FormControl
