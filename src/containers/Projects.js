@@ -106,7 +106,7 @@ export default class Projects extends Component {
               />
             </FormGroup>
 
-            <ButtonToolbar>
+            <ButtonToolbar className="pull-right">
             <LoaderButton
               
               bsStyle="primary"
@@ -132,7 +132,7 @@ export default class Projects extends Component {
               bsStyle="default"
               bsSize="large"
               onClick={this.routechange}
-              text="Back"
+              text="Cancel"
               loadingText="Returning…"
             />
             </LinkContainer>

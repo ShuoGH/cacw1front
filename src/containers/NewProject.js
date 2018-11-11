@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl } from "react-bootstrap";
+import { FormGroup, FormControl,ButtonToolbar } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
 import "./NewProject.css";
 import { API } from "aws-amplify";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default class NewNote extends Component {
   constructor(props) {
@@ -57,8 +58,8 @@ export default class NewNote extends Component {
               componentClass="textarea"
             />
           </FormGroup>
+          <ButtonToolbar className="pull-right">
           <LoaderButton
-            className="pull-right"
             bsStyle="primary"
             bsSize="large"
             disabled={!this.validateForm()}
@@ -67,6 +68,17 @@ export default class NewNote extends Component {
             text="Create"
             loadingText="Creating…"
           />
+          <LinkContainer to="/">
+          <LoaderButton
+            bsStyle="default"
+            bsSize="large"
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="Cancel"
+            loadingText="Returning…"
+          />
+          </LinkContainer>
+          </ButtonToolbar>
         </form>
       </div>
     );
