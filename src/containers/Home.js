@@ -98,3 +98,4 @@ export default class Home extends Component {
 
 //1. there must be some problems here. I should correct the function of rendering the notelists to make it display all the time.
 // ---18:14 09-11-2018
+//2. this is going to be merge 
