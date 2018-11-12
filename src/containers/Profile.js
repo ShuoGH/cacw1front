@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
-import "./Home.css";
+import "./Profile.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 

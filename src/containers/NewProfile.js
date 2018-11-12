@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl,ButtonToolbar } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
-import "./NewProject.css";
+import "./NewProfile.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 
