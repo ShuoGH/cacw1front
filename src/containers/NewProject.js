@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl,ButtonToolbar } from "react-bootstrap";
+import { FormGroup, FormControl,ButtonToolbar,ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
 import "./NewProject.css";
 import { API } from "aws-amplify";
@@ -15,18 +15,17 @@ export default class NewProject extends Component {
       pstatus: "",
     };
   }
-
+//validate the project name, is should be bigger than 0. 
   validateForm() {
     return this.state.pname.length > 0;
   }
-
+//handle the changes when you change the input.
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   }
-
-
+//handle the submit, to invoke the API and do action on the database.
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -34,7 +33,9 @@ export default class NewProject extends Component {
 
     try {
       await this.createProject({
-        pname: this.state.pname
+        pname: this.state.pname,
+        pmanager:this.state.pmanager,
+        pstatus:this.state.pstatus
       });
       this.props.history.push("/projectslist");
     } catch (e) {
@@ -52,11 +53,29 @@ export default class NewProject extends Component {
   render() {
     return (
       <div className="NewProject">
-        <form onSubmit={this.handleSubmit}>
+      <h1>New Project</h1>
+        <form horizontal onSubmit={this.handleSubmit}>
           <FormGroup controlId="pname">
+          <ControlLabel>Project Name</ControlLabel>
             <FormControl
               onChange={this.handleChange}
               value={this.state.pname}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="pmanager">
+          <ControlLabel>Project Manager</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.pmanager}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="pstatus">
+          <ControlLabel>status</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.status}
               componentClass="textarea"
             />
           </FormGroup>
@@ -79,9 +98,11 @@ export default class NewProject extends Component {
           />
           </LinkContainer>
           </ButtonToolbar>
-        </form>
+        </form>  
       </div>
     );
   }
 }
+//the </form> tag should include the buttons, or the submit action can't be invoked successfully. ---22:02 12-11-2018
+
 //1. modify the button style to create.---16:20 11-11-2018

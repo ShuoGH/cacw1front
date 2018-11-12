@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl, ButtonToolbar} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./Projects.css";
@@ -21,11 +21,13 @@ export default class Projects extends Component {
   async componentDidMount() {
     try {
       const project = await this.getProject();
-      const { pname } = project;
+      const { pname,pmanager,pstatus } = project;
 
       this.setState({
         project,
         pname,
+        pmanager,
+        pstatus
       });
     } catch (e) {
       alert(e);
@@ -59,6 +61,8 @@ export default class Projects extends Component {
     try {
       await this.saveProject({
         pname: this.state.pname,
+        pmanager:this.state.pmanager,
+        pstatus:this.state.pstatus
       });
       this.props.history.push("/projectslist");
     } catch (e) {
@@ -99,13 +103,29 @@ export default class Projects extends Component {
         {this.state.project &&
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="pname">
+            <ControlLabel>Project Name</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
                 value={this.state.pname}
                 componentClass="textarea"
               />
             </FormGroup>
-
+          <FormGroup controlId="pmanager">
+          <ControlLabel>Project Manager</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.pmanager}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="pstatus">
+          <ControlLabel>status</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.pstatus}
+              componentClass="textarea"
+            />
+          </FormGroup>
             <ButtonToolbar className="pull-right">
             <LoaderButton
               
