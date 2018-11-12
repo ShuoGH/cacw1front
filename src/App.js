@@ -65,15 +65,18 @@ render() {
             {this.state.isAuthenticated
               ? <Fragment>
               <NavDropdown title="User" id="Navdropdown">
-              <LinkContainer exact to="/Profile" activeClassName=""> 
-              <MenuItem eventkey="1">User Profile</MenuItem>
+              <LinkContainer exact to="/Profile/New" activeClassName=""> 
+              <MenuItem eventkey="1">Create profile</MenuItem>
+              </LinkContainer>
+              <LinkContainer exact to="/profile" activeClassName="">
+              <MenuItem eventkey="2">update profile</MenuItem>
               </LinkContainer>
               <LinkContainer exact to="/" activeClassName="">
-              <MenuItem eventkey="2">Projects</MenuItem>
+              <MenuItem eventkey="3">Projects</MenuItem>
               </LinkContainer>
               <MenuItem divider />
               <LinkContainer exact to="/" activeClassName="">
-              <MenuItem eventkey="3" onClick={this.handleLogout}>Logout</MenuItem>
+              <MenuItem eventkey="4" onClick={this.handleLogout}>Logout</MenuItem>
               </LinkContainer>
               </NavDropdown>
                 </Fragment>
@@ -97,4 +100,4 @@ render() {
 export default withRouter(App);
 //expression: ? : is the expression of "if then else" 
 //1. use the dropdown menu to list the option which user can choose. see the profile and the projects, and can choose to logout 
-//2. going to create a new page of listing the profile of users fron the dynamoDB ---15:54 11-11-2018
+//2. going to create a new page of listing the profile of users fron the dynamoDB. list function. ---21:55 11-11-2018

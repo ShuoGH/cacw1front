@@ -1,0 +1,8 @@
+.NewProfile form {
+  padding-bottom: 15px;
+}
+
+.NewProfile form textarea {
+  height: 300px;
+  font-size: 24px;
+}

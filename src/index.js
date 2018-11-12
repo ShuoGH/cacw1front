@@ -27,6 +27,11 @@ Amplify.configure({
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION
       },
+      {
+        name: "staff",
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION
+      },
     ]
   }
 });

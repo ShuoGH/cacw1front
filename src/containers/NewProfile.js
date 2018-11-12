@@ -5,19 +5,21 @@ import "./NewProject.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default class NewProject extends Component {
+export default class NewProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: null,
-      content: ""
+      gender: "",
+      department:"",
+      skill:"",
     };
   }
-
-  validateForm() {
-    return this.state.content.length > 0;
+//i think i should add the part of email. 
+  validateProfile() {
+    return this.state.gender.length > 0;
   }
-
+// the dapartment should not empty.
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -31,8 +33,11 @@ export default class NewProject extends Component {
     this.setState({ isLoading: true });
 
     try {
-      await this.createProject({
-        content: this.state.content
+      await this.createProfile({
+        gender: this.state.gender,
+        department:this.state.department,
+        skill:this.state.skill,
+
       });
       this.props.history.push("/");
     } catch (e) {
@@ -41,28 +46,45 @@ export default class NewProject extends Component {
     }
   }
 
-  createProject(project) {
-    return API.post("projects", "/projects", {
-      body: project
+  createProfile(profile) {
+    return API.post("staff", "/staff", {
+      body: profile
     });
   }
 //the projects api is the api endpoint i want invoke.
   render() {
     return (
-      <div className="NewProject">
+      <div className="NewProfile">      
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="content">
+          <p>Gender</p>
+          <FormGroup controlId="gender">
             <FormControl
               onChange={this.handleChange}
-              value={this.state.content}
+              value={this.state.gender}
               componentClass="textarea"
             />
           </FormGroup>
+          <FormGroup controlId="department">
+            <p>department</p>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.department}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="skill">
+            <p>skill</p>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.skill}
+              componentClass="textarea"
+            />
+            </FormGroup>
           <ButtonToolbar className="pull-right">
           <LoaderButton
             bsStyle="primary"
             bsSize="large"
-            disabled={!this.validateForm()}
+            disabled={!this.validateProfile()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Create"
