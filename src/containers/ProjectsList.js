@@ -42,7 +42,7 @@ export default class ProjectsList extends Component {
               key={project.projectid}
               to={`/projects/${project.projectid}`}
             >
-              <ListGroupItem header={project.content.trim().split("\n")[0]}>
+              <ListGroupItem header={project.pname}>
                 {"Created: " + new Date(project.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>

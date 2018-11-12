@@ -10,12 +10,14 @@ export default class NewProject extends Component {
     super(props);
     this.state = {
       isLoading: null,
-      content: ""
+      pname: "",
+      pmanager: "",
+      pstatus: "",
     };
   }
 
   validateForm() {
-    return this.state.content.length > 0;
+    return this.state.pname.length > 0;
   }
 
   handleChange = event => {
@@ -32,7 +34,7 @@ export default class NewProject extends Component {
 
     try {
       await this.createProject({
-        content: this.state.content
+        pname: this.state.pname
       });
       this.props.history.push("/projectslist");
     } catch (e) {
@@ -51,10 +53,10 @@ export default class NewProject extends Component {
     return (
       <div className="NewProject">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="content">
+          <FormGroup controlId="pname">
             <FormControl
               onChange={this.handleChange}
-              value={this.state.content}
+              value={this.state.pname}
               componentClass="textarea"
             />
           </FormGroup>

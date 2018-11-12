@@ -14,18 +14,18 @@ export default class Projects extends Component {
       isLoading: null,
       isDeleting: null,
       project: null,
-      content: "",
+      pname: "",
     };
   }
 
   async componentDidMount() {
     try {
       const project = await this.getProject();
-      const { content } = project;
+      const { pname } = project;
 
       this.setState({
         project,
-        content,
+        pname,
       });
     } catch (e) {
       alert(e);
@@ -36,7 +36,7 @@ export default class Projects extends Component {
     return API.get("projects", `/projects/${this.props.match.params.id}`);
   }
   validateForm() {
-    return this.state.content.length > 0;
+    return this.state.pname.length > 0;
   }
 
   handleChange = event => {
@@ -58,7 +58,7 @@ export default class Projects extends Component {
 
     try {
       await this.saveProject({
-        content: this.state.content,
+        pname: this.state.pname,
       });
       this.props.history.push("/projectslist");
     } catch (e) {
@@ -98,10 +98,10 @@ export default class Projects extends Component {
       <div className="Projects">
         {this.state.project &&
           <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="content">
+            <FormGroup controlId="pname">
               <FormControl
                 onChange={this.handleChange}
-                value={this.state.content}
+                value={this.state.pname}
                 componentClass="textarea"
               />
             </FormGroup>
