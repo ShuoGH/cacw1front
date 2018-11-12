@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl, ButtonToolbar} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./Profile.css";
@@ -18,14 +18,14 @@ export default class Profile extends Component {
       gender:"",
       department:"",
       skill:"",
-      project:"",
+      pname:"",
     };
   }
 
   async componentDidMount() {
     try {
       const profile = await this.getProfile();
-      const { email,gender,department,skill,project } = profile;
+      const { email,gender,department,skill,pname } = profile;
 //the project should exist in the projects list ---11:46 12-11-2018
       this.setState({
         profile,
@@ -33,7 +33,7 @@ export default class Profile extends Component {
         gender,
         department,
         skill,
-        project,
+        pname,
       });
     } catch (e) {
       alert(e);
@@ -53,9 +53,9 @@ export default class Profile extends Component {
     });
   }
 
-  saveProfile(project) {
+  saveProfile(profile) {
     return API.put("staff", `/staff/${this.props.match.params.id}`, {
-      body: project
+      body: profile
     });
   }
 
@@ -70,10 +70,10 @@ export default class Profile extends Component {
         gender: this.state.gender,
         department: this.state.department,
         skill: this.state.skill,
-        project:this.state.project,
+        pname:this.state.pname,
         
       });
-      this.props.history.push("/");
+      this.props.history.push("/stafflist");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
@@ -86,6 +86,7 @@ export default class Profile extends Component {
         {this.state.profile &&
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="email">
+            <ControlLabel>Email</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
                 value={this.state.email}
@@ -93,6 +94,7 @@ export default class Profile extends Component {
               />
             </FormGroup>
             <FormGroup controlId="gender">
+            <ControlLabel>gender</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
                 value={this.state.gender}
@@ -100,6 +102,7 @@ export default class Profile extends Component {
               />
             </FormGroup>
             <FormGroup controlId="department">
+            <ControlLabel>Department</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
                 value={this.state.department}
@@ -107,16 +110,18 @@ export default class Profile extends Component {
               />
             </FormGroup>
             <FormGroup controlId="skill">
+            <ControlLabel>Skill</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
                 value={this.state.skill}
                 componentClass="textarea"
               />
             </FormGroup>
-            <FormGroup controlId="project">
+            <FormGroup controlId="pname">
+            <ControlLabel>Project Name</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
-                value={this.state.project}
+                value={this.state.pname}
                 componentClass="textarea"
               />
             </FormGroup>
@@ -132,7 +137,7 @@ export default class Profile extends Component {
               loadingText="Saving…"
             />
 
-            <LinkContainer to="/">
+            <LinkContainer to="/stafflist">
             <LoaderButton
               
               bsStyle="default"
@@ -151,3 +156,4 @@ export default class Profile extends Component {
 
 //1. this is the page of updating the profile.  ---11:51 12-11-2018 finish    
 //2. should change the lambda function, to put the email and some other attr into the table. ---13:49 12-11-2018 ..
+//3. there are a lot of bugs in this part. ---22:19 12-11-2018

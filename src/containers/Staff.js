@@ -3,6 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Staff.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
+//this is used to list the staff.
 
 export default class Staff extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class Staff extends Component {
         i !== 0
           ? <LinkContainer
               key={staff.userid}
-              to={`/stafflist`}   //should change it later 
+              to={`/profile/update`}   //should change it later 
             >
               <ListGroupItem header={staff.userid}>
                 {"Created: " + new Date(staff.createdAt).toLocaleString()}
@@ -78,4 +79,5 @@ export default class Staff extends Component {
     );
   }
 }
-//1. edition v1.0 for the staff list page.  ---13:54 12-11-2018.. it cause bugs (need fix)
+//1. edition v1.0 for the staff list page.  ---13:54 12-11-2018 fixed bugs v1.0 ---22:25 12-11-2018
+//2. need change the style of showing the staff. not userid, how to show the username.---22:26 12-11-2018  (how?)
