@@ -100,4 +100,4 @@ render() {
 export default withRouter(App);
 //expression: ? : is the expression of "if then else" 
 //1. use the dropdown menu to list the option which user can choose. see the profile and the projects, and can choose to logout 
-//2. going to create a new page of listing the profile of users fron the dynamoDB. list function. ---21:55 11-11-2018
+//2. use admin to develop the frontend.
