@@ -34,7 +34,7 @@ export default class NewProject extends Component {
       await this.createProject({
         content: this.state.content
       });
-      this.props.history.push("/");
+      this.props.history.push("/projectslist");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
@@ -68,7 +68,7 @@ export default class NewProject extends Component {
             text="Create"
             loadingText="Creating…"
           />
-          <LinkContainer to="/">
+          <LinkContainer to="/projectslist">
           <LoaderButton
             bsStyle="default"
             bsSize="large"

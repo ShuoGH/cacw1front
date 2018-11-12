@@ -60,7 +60,7 @@ export default class Projects extends Component {
       await this.saveProject({
         content: this.state.content,
       });
-      this.props.history.push("/");
+      this.props.history.push("/projectslist");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
@@ -87,7 +87,7 @@ export default class Projects extends Component {
 
     try {
       await this.deleteProject();
-      this.props.history.push("/");
+      this.props.history.push("/projectslist");
     } catch (e) {
       alert(e);
       this.setState({ isDeleting: false });
@@ -126,7 +126,7 @@ export default class Projects extends Component {
               text="Delete"
               loadingText="Deleting…"
             />
-            <LinkContainer to="/">
+            <LinkContainer to="/projectslist">
             <LoaderButton
               
               bsStyle="default"
