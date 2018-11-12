@@ -65,18 +65,24 @@ render() {
             {this.state.isAuthenticated
               ? <Fragment>
               <NavDropdown title="User" id="Navdropdown">
+              <LinkContainer exact to="/" activeClassName=""> 
+              <MenuItem eventkey="0">Main Page</MenuItem>
+              </LinkContainer>
               <LinkContainer exact to="/Profile/New" activeClassName=""> 
               <MenuItem eventkey="1">Create profile</MenuItem>
               </LinkContainer>
-              <LinkContainer exact to="/profile" activeClassName="">
+              <LinkContainer exact to="/profile/update" activeClassName="">
               <MenuItem eventkey="2">update profile</MenuItem>
               </LinkContainer>
-              <LinkContainer exact to="/" activeClassName="">
+              <LinkContainer exact to="/projectslist" activeClassName="">
               <MenuItem eventkey="3">Projects</MenuItem>
+              </LinkContainer>
+              <LinkContainer exact to="/stafflist" activeClassName="">
+              <MenuItem eventkey="4">Staff List</MenuItem>
               </LinkContainer>
               <MenuItem divider />
               <LinkContainer exact to="/" activeClassName="">
-              <MenuItem eventkey="4" onClick={this.handleLogout}>Logout</MenuItem>
+              <MenuItem eventkey="5" onClick={this.handleLogout}>Logout</MenuItem>
               </LinkContainer>
               </NavDropdown>
                 </Fragment>
@@ -100,4 +106,5 @@ render() {
 export default withRouter(App);
 //expression: ? : is the expression of "if then else" 
 //1. use the dropdown menu to list the option which user can choose. see the profile and the projects, and can choose to logout 
-//2. use admin to develop the frontend.
+//2. use admin to develop the frontend.---10:40 12-11-2018
+//3. add the staff list page for the app ---10:40 12-11-2018
