@@ -80,32 +80,6 @@ export default class Profile extends Component {
     }
   }
 
-
-  // deleteProfile() {
-  //   return API.del("staff", `/staff/${this.props.match.params.id}`);
-  // }
-//it can't be deleted by themselves.
-  // handleDelete = async event => {
-  //   event.preventDefault();
-
-  //   const confirmed = window.confirm(
-  //     "Are you sure you want to delete this project?"
-  //   );
-
-  //   if (!confirmed) {
-  //     return;
-  //   }
-
-  //   this.setState({ isDeleting: true });
-
-  //   try {
-  //     await this.deleteProject();
-  //     this.props.history.push("/");
-  //   } catch (e) {
-  //     alert(e);
-  //     this.setState({ isDeleting: false });
-  //   }
-  // }
   render() {
     return (
       <div className="Profile">
@@ -175,15 +149,5 @@ export default class Profile extends Component {
   }
 }
 
-//1. this is the page of updating the profile.  ---11:51 12-11-2018    
-//2. should put it into the frontend ---11:52 12-11-2018
-
-            // <LoaderButton
-              
-            //   bsStyle="danger"
-            //   bsSize="large"
-            //   isLoading={this.state.isDeleting}
-            //   onClick={this.handleDelete}
-            //   text="Delete"
-            //   loadingText="Deleting…"
-            // />
+//1. this is the page of updating the profile.  ---11:51 12-11-2018 finish    
+//2. should change the lambda function, to put the email and some other attr into the table. ---13:49 12-11-2018 ..

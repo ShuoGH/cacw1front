@@ -90,7 +90,7 @@ export default class NewProfile extends Component {
             text="Create"
             loadingText="Creating…"
           />
-          <LinkContainer to="/">
+          <LinkContainer to="/stafflist">
           <LoaderButton
             bsStyle="default"
             bsSize="large"
