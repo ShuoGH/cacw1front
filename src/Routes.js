@@ -23,7 +23,7 @@ export default ({ childProps }) =>
     <AuthenticatedRoute path="/projects/:id" exact component={Projects} props={childProps} />
     <AuthenticatedRoute path="/projectslist" exact component={ProjectsList} props={childProps} />
     <AuthenticatedRoute path="/profile/new" exact component={NewProfile} props={childProps} />
-    <AuthenticatedRoute path="/profile/update" exact component={Profile} props={childProps} />
+    <AuthenticatedRoute path="/profile/:id" exact component={Profile} props={childProps} />
     <AuthenticatedRoute path="/stafflist" exact component={Staff} props={childProps} />
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />

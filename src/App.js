@@ -13,7 +13,9 @@ class App extends Component {
     super(props);
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      isAuthenticating: true,
+      isadmin:true,
+      //define the isadmin flag to record the flag whether the user is admin.
       //first initializes the isAuthenticated flag in the app's flag 
     };
   }
@@ -32,7 +34,7 @@ class App extends Component {
 
     this.setState({ isAuthenticating: false });
   }
-//this is used to update the flag which is used to indicate whether user has logged in 
+//this is used to update the flag which is used to indicate whether user has logged in.
 userHasAuthenticated = authenticated => {
   this.setState({ isAuthenticated: authenticated });
 }
@@ -47,9 +49,11 @@ handleLogout = async event => {
 //and return to the home page of the application 
 
 render() {
+//this is what will be used in the child class, super() and the this...
   const childProps = {
       isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
+      // isadmin:this.isadin,   //this is going to pass to the child components.
   };
   return (
     <div className="App container">
