@@ -11,7 +11,7 @@ export default class Staff extends Component {
 
     this.state = {
       isLoading: true,
-      profile: []
+      staff: []
     };
   }
 
@@ -34,17 +34,19 @@ export default class Staff extends Component {
     console.log("to get the api")
     return API.get("staff", "/staff");
   }
-  //this is the url when you invoke your api. 
+  //this is the url when you invoke your api.
+  //here you can get the staff properly. but why can't work after get in the specific item? ---13:39 13-11-2018 
   renderStaffList(staff) {
     return [{}].concat(staff).map(
-      (staff, i) =>
+      (user, i) =>
         i !== 0
           ? <LinkContainer
-              key={staff.userid}
-              to={`/profile/update`}   //should change it later 
-            >
-              <ListGroupItem header={staff.userid}>
-                {"Created: " + new Date(staff.createdAt).toLocaleString()}
+              key={user.userid}
+              to={`/profile/${user.userid}`}   
+            >   
+              <ListGroupItem header={user.userid}>
+                {"email: " + user.email}   
+                {"    Created: " + new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
           : <LinkContainer

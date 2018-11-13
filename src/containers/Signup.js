@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import {
-  Button,
   HelpBlock,
   FormGroup,
   FormControl,
-  ControlLabel
+  ControlLabel,
+  Button
 } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
+import { LinkContainer } from "react-router-bootstrap";
 import "./Signup.css";
-import { Auth } from "aws-amplify"
+import { Auth } from "aws-amplify";
 
 export default class Signup extends Component {
   constructor(props) {
@@ -16,22 +17,18 @@ export default class Signup extends Component {
 
     this.state = {
       isLoading: false,
-      username: "",
+      email: "",
       password: "",
       confirmPassword: "",
       confirmationCode: "",
       newUser: null
+      //use the newUser to store the info, so that the confirmation can be rendered
     };
-    this.routeChange = this.routeChange.bind(this);
   }
-  routeChange(){
-    let path = `/`;
-    this.props.history.push(path);
-    }
 
   validateForm() {
     return (
-      this.state.username.length > 0 &&
+      this.state.email.length > 0 &&
       this.state.password.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
@@ -54,11 +51,12 @@ export default class Signup extends Component {
 
     try {
       const newUser = await Auth.signUp({
-        username: this.state.username,
+        username: this.state.email,
         password: this.state.password
       });
       this.setState({
         newUser
+        //add info to the newUser.
       });
     } catch (e) {
       alert(e.message);
@@ -67,24 +65,62 @@ export default class Signup extends Component {
     this.setState({ isLoading: false });
   }
 
-  renderConfirmation() {
+  handleConfirmationSubmit = async event => {
+    event.preventDefault();
+
+    this.setState({ isLoading: true });
+
+    try {
+      await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
+      await Auth.signIn(this.state.email, this.state.password);
+
+      this.props.userHasAuthenticated(true);
+      this.props.history.push("/");
+    } catch (e) {
+      alert(e.message);
+      this.setState({ isLoading: false });
+    }
+  }
+
+  renderConfirmationForm() {
     return (
-    <form>
-        <HelpBlock>Please wait for the confirmation from the Admin......</HelpBlock>
-        <Button block bsSize='large' onClick={this.routeChange}>Get it</Button>
-    </form>
+      <form onSubmit={this.handleConfirmationSubmit}>
+        <FormGroup controlId="confirmationCode" bsSize="large">
+          <ControlLabel>Confirmation Code</ControlLabel>
+          <FormControl
+            autoFocus
+            type="tel"
+            value={this.state.confirmationCode}
+            onChange={this.handleChange}
+          />
+          <HelpBlock>Please check your company email for the code.</HelpBlock>
+        </FormGroup>
+        <LoaderButton
+          block
+          bsSize="large"
+          disabled={!this.validateConfirmationForm()}
+          type="submit"
+          isLoading={this.state.isLoading}
+          text="Verify"
+          loadingText="Verifying…"
+        />
+        <HelpBlock>You can also wait for the confirmation from the Admin.</HelpBlock>
+        <LinkContainer to="/">
+        <Button block bsSize='large' onClick={this.routeChange}>Wait for confirmation</Button>
+        </LinkContainer>
+      </form>
     );
   }
 
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <FormGroup controlId="username" bsSize="large">
-          <ControlLabel>Username</ControlLabel>
+        <FormGroup controlId="email" bsSize="large">
+          <ControlLabel>Email</ControlLabel>
           <FormControl
             autoFocus
-
-            value={this.state.username}
+            type="email"
+            value={this.state.email}
             onChange={this.handleChange}
           />
         </FormGroup>
@@ -116,16 +152,15 @@ export default class Signup extends Component {
       </form>
     );
   }
-
+  
+//if it has a new uses, render the confirmation form, or render the sign up form.
   render() {
     return (
       <div className="Signup">
         {this.state.newUser === null
           ? this.renderForm()
-          : this.renderConfirmation()}
+          : this.renderConfirmationForm()}
       </div>
     );
   }
 }
-
-//1. change the function, users can register by themselves, but need to wait for the confirmation. ---15:04 11-11-2018

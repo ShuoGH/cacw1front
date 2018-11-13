@@ -20,10 +20,12 @@ export default class Profile extends Component {
       skill:"",
       pname:"",
     };
+    console.log("heiheihei",this.props)
   }
 
   async componentDidMount() {
     try {
+      console.log("print the state:",this.state.profile)   //output: null
       const profile = await this.getProfile();
       const { email,gender,department,skill,pname } = profile;
 //the project should exist in the projects list ---11:46 12-11-2018
@@ -35,12 +37,15 @@ export default class Profile extends Component {
         skill,
         pname,
       });
+      console.log("print the props:",this.props.match.params.id)   //use this to print the string trying to know the bug.---13:03 13-11-2018
+      console.log("print the state profile:",this.state.profile)    //output is wrong.
     } catch (e) {
       alert(e);
     }
   }
 
   getProfile() {
+    console.log("print the props in the function getProfile:",this.props.match.params.id)
     return API.get("staff", `/staff/${this.props.match.params.id}`);
   }
   validateForm() {
@@ -155,5 +160,7 @@ export default class Profile extends Component {
 }
 
 //1. this is the page of updating the profile.  ---11:51 12-11-2018 finish    
-//2. should change the lambda function, to put the email and some other attr into the table. ---13:49 12-11-2018 ..
-//3. there are a lot of bugs in this part. ---22:19 12-11-2018
+//2. should change the lambda function, to put the email and some other attr into the table. ---13:49 12-11-2018 finish
+//3. there are a lot of bugs in this part. ---22:19 12-11-2018 ... 
+//4. the admin's function on creating the user is a bug. ---10:31 13-11-2018  ...
+//   ...................API invoking is wrong.
