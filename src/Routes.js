@@ -8,9 +8,9 @@ import Signup from "./containers/Signup";
 import NewProject from "./containers/NewProject";
 import Projects from "./containers/Projects";
 import ProjectsList from "./containers/ProjectsList";
-import NewProfile from "./containers/NewProfile"
-import Staff from "./containers/Staff"
-import Profile from "./containers/Profile"
+import NewProfile from "./containers/NewProfile";
+import Staff from "./containers/Staff";
+import Profile from "./containers/Profile";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 

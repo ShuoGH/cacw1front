@@ -54,7 +54,7 @@ export default class NewProject extends Component {
     return (
       <div className="NewProject">
       <h1>New Project</h1>
-        <form horizontal onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="pname">
           <ControlLabel>Project Name</ControlLabel>
             <FormControl

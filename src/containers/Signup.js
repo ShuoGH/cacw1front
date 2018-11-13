@@ -22,6 +22,7 @@ export default class Signup extends Component {
       confirmPassword: "",
       confirmationCode: "",
       newUser: null
+      //use the newUser to store the info, so that the confirmation can be rendered
     };
   }
 
@@ -55,6 +56,7 @@ export default class Signup extends Component {
       });
       this.setState({
         newUser
+        //add info to the newUser.
       });
     } catch (e) {
       alert(e.message);
@@ -150,7 +152,8 @@ export default class Signup extends Component {
       </form>
     );
   }
-
+  
+//if it has a new uses, render the confirmation form, or render the sign up form.
   render() {
     return (
       <div className="Signup">

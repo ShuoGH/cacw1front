@@ -12,7 +12,8 @@ export default class Login extends Component {
     this.state = {
       isLoading:false,
       email: "",
-      password: ""
+      password: "",
+      isForget:null,
     };
   }
   //validform to check the input
@@ -39,9 +40,21 @@ export default class Login extends Component {
     }
  }
 
-  render() {
+  //this is used to handle the forget flag.
+  handleForget = async event => {
+    this.setState({isForget:true});
+ }
+  //when the isForget is true, this part will be rendered.
+  renderForget(){
     return (
-      <div className="Login">
+      <form>
+       you fotget. this part will be add more to reset new password/
+      </form>
+    );  
+ }
+
+ renderLogin(){
+    return (
         <form onSubmit={this.handleSubmit}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>email</ControlLabel>   
@@ -71,11 +84,18 @@ export default class Login extends Component {
             text="Login"
             loadingText="Logging in…"
           />
-          <Button block bsSize="small" >Forget Password</Button>
-        </form>
-      </div>
+          <Button block bsSize="small" bsStyle="default" onClick={this.handleForget} >Forget Password</Button>
+          </form>
+
     );
+ }
+  render() {
+    return(
+      <div className="Login">
+        {this.state.isForget === null
+          ? this.renderLogin()
+          : this.renderForget()}
+      </div>
+      )
   }
 }
-
-//1. add the forget password button but didn't add the logic to realize it. should add a onClick function. ---17:50 09-11-2018
