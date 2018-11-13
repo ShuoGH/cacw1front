@@ -8,16 +8,16 @@ export default class Login extends Component {
   constructor(props) {
   //create a state obj to store what the user enters in the form
     super(props);
-  //the form contains the username and the password. 
+  //the form contains the email and the password. 
     this.state = {
       isLoading:false,
-      username: "",
+      email: "",
       password: ""
     };
   }
   //validform to check the input
   validateForm() {
-    return this.state.username.length > 0 && this.state.password.length > 0;
+    return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -32,25 +32,24 @@ export default class Login extends Component {
     this.setState({isLoading:true});
 
     try {
-      await Auth.signIn(this.state.username, this.state.password);
+      await Auth.signIn(this.state.email, this.state.password);
       this.props.userHasAuthenticated(true);
     } catch (e) {
       alert(e.message);
     }
-      console.log("after login the isloading state is:",this.state.isLoading);   //output the state of isloading.
-      console.log("after login the authenticated state is:",this.state.isLoading);   //output the state of authenticated state 
-  }
+ }
 
   render() {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="username" bsSize="large">
-            <ControlLabel>Username</ControlLabel>   
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel>email</ControlLabel>   
             <FormControl
               autoFocus
-              placeholder="Enter username"
-              value={this.state.username}
+              type="email"
+              placeholder="Enter your company email"
+              value={this.state.email}
               onChange={this.handleChange}
             />
           </FormGroup>
@@ -58,7 +57,7 @@ export default class Login extends Component {
             <ControlLabel>Password</ControlLabel>
             <FormControl
               value={this.state.password}
-              placeholder="Enter password"
+              placeholder="Enter your password"
               onChange={this.handleChange}
               type="password"
             />

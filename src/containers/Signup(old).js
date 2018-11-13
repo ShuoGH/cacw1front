@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import {
+  Button,
   HelpBlock,
   FormGroup,
   FormControl,
-  ControlLabel,
-  Button
+  ControlLabel
 } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
 import { LinkContainer } from "react-router-bootstrap";
+import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
-import { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify"
 
 export default class Signup extends Component {
   constructor(props) {
@@ -23,7 +23,13 @@ export default class Signup extends Component {
       confirmationCode: "",
       newUser: null
     };
+    // this.routeChange = this.routeChange.bind(this);
   }
+  //
+  // routeChange(){
+  //   let path = `/`;
+  //   this.props.history.push(path);
+  //   }
 
   validateForm() {
     return (
@@ -50,7 +56,7 @@ export default class Signup extends Component {
 
     try {
       const newUser = await Auth.signUp({
-        username: this.state.email,
+        email: this.state.email,
         password: this.state.password
       });
       this.setState({
@@ -91,7 +97,7 @@ export default class Signup extends Component {
             value={this.state.confirmationCode}
             onChange={this.handleChange}
           />
-          <HelpBlock>Please check your company email for the code.</HelpBlock>
+          <HelpBlock>Please check your email for the code.</HelpBlock>
         </FormGroup>
         <LoaderButton
           block
@@ -102,9 +108,9 @@ export default class Signup extends Component {
           text="Verify"
           loadingText="Verifying…"
         />
-        <HelpBlock>You can also wait for the confirmation from the Admin.</HelpBlock>
+        <HelpBlock>Or you wait for the confirmation from the Admin.</HelpBlock>
         <LinkContainer to="/">
-        <Button block bsSize='large' onClick={this.routeChange}>Wait for confirmation</Button>
+        <Button block bsSize='large' onClick={this.routeChange}>Wait for the confirmation</Button>
         </LinkContainer>
       </form>
     );
@@ -114,10 +120,11 @@ export default class Signup extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
+          <ControlLabel>email</ControlLabel>
           <FormControl
             autoFocus
             type="email"
+            placeholder="use your company email"
             value={this.state.email}
             onChange={this.handleChange}
           />
@@ -126,6 +133,7 @@ export default class Signup extends Component {
           <ControlLabel>Password</ControlLabel>
           <FormControl
             value={this.state.password}
+            placeholder="input your password"
             onChange={this.handleChange}
             type="password"
           />
@@ -134,6 +142,7 @@ export default class Signup extends Component {
           <ControlLabel>Confirm Password</ControlLabel>
           <FormControl
             value={this.state.confirmPassword}
+            placeholder="input password again"
             onChange={this.handleChange}
             type="password"
           />
@@ -156,8 +165,10 @@ export default class Signup extends Component {
       <div className="Signup">
         {this.state.newUser === null
           ? this.renderForm()
-          : this.renderConfirmationForm()}
+          : this.renderConfirmation()}
       </div>
     );
   }
 }
+
+//1. change the function, users can register by themselves, but need to wait for the confirmation. ---15:04 11-11-2018
