@@ -52,7 +52,7 @@ export default class ProjectsList extends Component {
             >
               <ListGroupItem>
                 <h4>
-                  <b>{"\uFF0B"}</b> Create a new project
+                  <b>{"\uFF0B"}</b> Create a New Project for Company
                 </h4>
               </ListGroupItem>
             </LinkContainer>
@@ -62,7 +62,7 @@ export default class ProjectsList extends Component {
   renderProjects() {
     return (
       <div className="projects">
-        <PageHeader>Your Projects</PageHeader>
+        <PageHeader>Projects List</PageHeader>
         <ListGroup>
           {!this.state.isLoading && this.renderProjectsList(this.state.project)} 
         </ListGroup>

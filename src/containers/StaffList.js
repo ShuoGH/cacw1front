@@ -49,23 +49,18 @@ export default class StaffList extends Component {
                 {"    Created: " + new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
-          : <LinkContainer
-              key="new"
-              to="/staff/new"
-            >
-              <ListGroupItem>
+          : <ListGroupItem>
                 <h4>
-                  <b>{"\uFF0B"}</b> Create a new user
+                  Staff in Company
                 </h4>
-              </ListGroupItem>
-            </LinkContainer>
+            </ListGroupItem>
     );
   }
   //when the i ==0, create the item which is the "create a new project" ---18:18 09-11-2018
   renderStaff() {
     return (
       <div className="user">
-        <PageHeader>Staff</PageHeader>
+        <PageHeader>Staff List</PageHeader>
         <ListGroup>
           {!this.state.isLoading && this.renderStaffList(this.state.staff)} 
         </ListGroup>

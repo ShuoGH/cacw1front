@@ -3,7 +3,7 @@ import { API } from "aws-amplify";
 import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
-import "./User.css";
+import "./Profile.css";
 //change it later ---16:09 14-11-2018
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -102,6 +102,7 @@ export default class Profile extends Component {
       <div className="Profile">
         {this.state.user &&
           <form onSubmit={this.handleSubmit}>
+          <h1> you can update your profile here</h1>
             <FormGroup controlId="username">
             <ControlLabel>username</ControlLabel>
               <FormControl

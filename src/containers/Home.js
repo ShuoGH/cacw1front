@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { FormGroup, FormControl,ButtonToolbar, ControlLabel } from "react-bootstrap";
+import LoaderButton from "../components/LoaderButton"; 
 import { API } from "aws-amplify";
 import "./Home.css";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default class Home extends Component {
   constructor(props) {
@@ -19,7 +22,7 @@ export default class Home extends Component {
       ismanager:"",
       isFirst: null,
       //isFirst: indicate whether the user is a new user who haven't register a new username.
-    };
+    }; 
     this.checkIsAdmin=this.checkIsAdmin.bind(this);
   }
 
@@ -72,16 +75,139 @@ export default class Home extends Component {
     // console.log("whether it's admin:",this.props.isAdmin)
   }
 
+  validateUser() {
+    return this.state.username.length > 0;
+  }
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+
   //write a function check whether the user is the first time to log in.
   //if it's the first time, then the user should fill the form of his infomation. which will be stored into the dynamoDB.
   //when the isFirst flag is true, then render the profile form to fill.
+  handleSubmit = async event => {
+    event.preventDefault();
 
-  //----------there will be a lot of code here to let the user to write the profile.---17:28 14-11-2018
+    this.setState({ isLoading: true });
+
+    try {
+      await this.createUser({
+        username:this.state.username,
+        email: this.state.email,
+        tel:this.state.tel,
+        gender: this.state.gender,
+        department:this.state.department,
+        skill:this.state.skill,
+        interest:this.state.interest,
+        pname: this.state.pname,
+      });
+      this.setState({isFirst:false})
+      this.props.setUserName(this.state.username)
+    } catch (e) {
+      alert(e);
+      this.setState({ isLoading: false });
+    }
+  }
+
+  createUser(user) {
+    return API.post("staff", "/staff", {
+      body: user
+    });
+  }
+  
   renderFillProfile(){
     return(
-        <div className="heihei">
-        <h1> Write your Profile here.
-        and there are some buttons here. </h1>
+        <div className="newuser">
+        <h1> Welcome to SHUO company! </h1>
+        <h2> You need to compelete your profile first. </h2>
+          <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="username">
+          <ControlLabel>username</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.username}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="email">
+          <ControlLabel>Email</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.email}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="tel">
+          <ControlLabel>phone number</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.tel}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <ControlLabel>Gender</ControlLabel>
+          <FormGroup controlId="gender">
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.gender}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="department">
+            <ControlLabel>department</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.department}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="skill">
+            <ControlLabel>skill</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.skill}
+              componentClass="textarea"
+            />
+            </FormGroup>
+          <FormGroup controlId="interest">
+          <ControlLabel>interest</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.interest}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="pname">
+            <ControlLabel>project name</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.pname}
+              componentClass="textarea"
+            />
+            </FormGroup>
+          <ButtonToolbar className="pull-right">
+          <LoaderButton
+            bsStyle="primary"
+            bsSize="large"
+            disabled={!this.validateUser()}
+            type="submit"
+            isLoading={this.state.isLoading}
+            text="Create"
+            loadingText="Creating…"
+          />
+          <LinkContainer to="/stafflist">
+          <LoaderButton
+            bsStyle="default"
+            bsSize="large"
+            text="Cancel"
+            loadingText="Returning…"
+          />
+          </LinkContainer>
+          </ButtonToolbar>
+        </form>
       </div>
       );
   }

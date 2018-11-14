@@ -37,22 +37,24 @@ class App extends Component {
 
     this.setState({ isAuthenticating: false });
   }
-//this is used to update the flag which is used to indicate whether user has logged in.
-userHasAuthenticated = authenticated => {
-  this.setState({ isAuthenticated: authenticated });
-}
-
-userIsAdmin = adminship => {
-    this.setState({
-      isAdmin: adminship
-    });
+  //this is used to update the flag which is used to indicate whether user has logged in.
+  userHasAuthenticated = authenticated => {
+    this.setState({ isAuthenticated: authenticated });
   }
 
-setUserName = theusername =>{
-  this.setState({
-    username: theusername
-  })
-}
+  userIsAdmin = adminship => {
+      this.setState({
+        isAdmin: adminship
+      });
+    }
+
+  setUserName = theusername =>{
+    this.setState({
+      username: theusername
+    })
+  }
+  
+  
 
 handleLogout = async event => {
   await Auth.signOut();
@@ -136,7 +138,7 @@ renderStaffEdition(){
               <LinkContainer exact to="/profile" activeClassName="">
               <MenuItem eventkey="2">User Profile</MenuItem>
               </LinkContainer>
-              <LinkContainer exact to="/personalproject" activeClassName="">
+              <LinkContainer exact to="/personalprojects" activeClassName="">
               <MenuItem eventkey="3">Personal Project</MenuItem>
               </LinkContainer>
 

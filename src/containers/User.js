@@ -24,14 +24,14 @@ export default class User extends Component {
       pname:"",
       ismanager:"",
     };
-    console.log("heiheihei",this.props)
+    // console.log("test",this.props)
   }
 
   async componentDidMount() {
     try {
-      console.log("print the state:",this.state.user)   //output: null
+      // console.log("print the state:",this.state.user)   
       const user = await this.getProfile();
-      console.log("bug code",user);
+      // console.log("bug code",user);
       const { username,email,tel,gender,department,skill,interest,pname } = user;
 //the project should exist in the projects list ---11:46 12-11-2018
       this.setState({
@@ -45,15 +45,15 @@ export default class User extends Component {
         interest,
         pname,
       });
-      console.log("print the props:",this.props.match.params.id)   //use this to print the string trying to know the bug.---13:03 13-11-2018
-      console.log("print the state user:",this.state.user)    //output is wrong.
+      // console.log("print the props:",this.props.match.params.id)   //use this to print the string trying to know the bug.---13:03 13-11-2018
+      // console.log("print the state user:",this.state.user)    //output is wrong.
     } catch (e) {
       alert(e);
     }
   }
 
   getProfile() {
-    console.log("print the props in the function getProfile:",this.props.match.params.id)
+    // console.log("print the props in the function getProfile:",this.props.match.params.id)
     return API.get("staff", `/staff/${this.props.match.params.id}`);
     //the front end is right. but there are some problems in the API function.
   }
@@ -71,6 +71,9 @@ export default class User extends Component {
     return API.put("staff", `/staff/${this.props.match.params.id}`, {
       body: user
     });
+  }
+  deleteProfile() {
+    return API.del("staff", `/staff/${this.props.match.params.id}`);
   }
 
   handleSubmit = async event => {
@@ -94,6 +97,28 @@ export default class User extends Component {
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
+    }
+  }
+  //admin can delete the user info in the database.
+  handleDelete = async event => {
+    event.preventDefault();
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete the information of this user from database?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.setState({ isDeleting: true });
+
+    try {
+      await this.deleteProfile();
+      this.props.history.push("/stafflist");
+    } catch (e) {
+      alert(e);
+      this.setState({ isDeleting: false });
     }
   }
 
@@ -177,7 +202,15 @@ export default class User extends Component {
               text="Save"
               loadingText="Saving…"
             />
-
+            <LoaderButton
+              
+              bsStyle="danger"
+              bsSize="large"
+              isLoading={this.state.isDeleting}
+              onClick={this.handleDelete}
+              text="Delete"
+              loadingText="Deleting…"
+            />
             <LinkContainer to="/stafflist">
             <LoaderButton
               
