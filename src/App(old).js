@@ -14,13 +14,12 @@ class App extends Component {
     this.state = {
       isAuthenticated: false,
       isAuthenticating: true,
-      isAdmin:false,
-      isManager:false,
+      isAdmin:true,
+      isManager:true,
       username:"USER",
       //define the isadmin flag to record the flag whether the user is admin.
       //define the isManager flag to record the state whether the user is manager of one project.
     };
-    this.userIsAdmin=this.userIsAdmin.bind(this);
   }
   async componentDidMount() {
     try {
@@ -42,32 +41,26 @@ userHasAuthenticated = authenticated => {
   this.setState({ isAuthenticated: authenticated });
 }
 
-userIsAdmin = adminship => {
-    this.setState({
-      isAdmin: adminship
-    });
-  }
-
-setUserName = theusername =>{
-  this.setState({
-    username: theusername
-  })
-}
-
 handleLogout = async event => {
   await Auth.signOut();
 
   this.userHasAuthenticated(false);
   this.props.history.push("/");
-  this.userIsAdmin(false)
-  this.setUserName("USER")
 }
 //this can clear the session on log out
 //and return to the home page of the application 
 
-//this is the admin edition, when the isadmin flag is true.
-renderAdminEdition(){
+render() {
+//this is what will be used in the child class, super() and the this...
+  const childProps = {
+      isAuthenticated: this.state.isAuthenticated,
+      userHasAuthenticated: this.userHasAuthenticated,
+      isAdmin:this.isAdmin,   //this is going to pass to the child components.
+      isManager:this.isManager, //store the info of user.
+      username:this.username,  //this is going to show in the navbar.
+  };
   return (
+    <div className="App container">
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
@@ -81,18 +74,20 @@ renderAdminEdition(){
               ? <Fragment>
               <NavDropdown title={this.state.username} id="Navdropdown">
               <LinkContainer exact to="/" activeClassName=""> 
-              <MenuItem eventkey="1">Main Page</MenuItem>
+              <MenuItem eventkey="0">Main Page</MenuItem>
+              </LinkContainer>
+              <LinkContainer exact to="/staff/New" activeClassName=""> 
+              <MenuItem eventkey="1">Create user</MenuItem>
               </LinkContainer>
               <LinkContainer exact to="/profile" activeClassName="">
-              <MenuItem eventkey="2">Profile(admin)</MenuItem>
+              <MenuItem eventkey="2">update profile</MenuItem>
               </LinkContainer>
               <LinkContainer exact to="/projectslist" activeClassName="">
-              <MenuItem eventkey="3">Projects List</MenuItem>
+              <MenuItem eventkey="3">Projects</MenuItem>
               </LinkContainer>
               <LinkContainer exact to="/stafflist" activeClassName="">
               <MenuItem eventkey="4">Staff List</MenuItem>
               </LinkContainer>
-
               <MenuItem divider />
               <LinkContainer exact to="/" activeClassName="">
               <MenuItem eventkey="5" onClick={this.handleLogout}>Logout</MenuItem>
@@ -111,75 +106,6 @@ renderAdminEdition(){
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-
-  );  
-}
-
-//this is the ordinary staff edition. which will show up when the user is a staff.
-renderStaffEdition(){
-  return (
-      <Navbar fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to="/">Management System</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            {this.state.isAuthenticated
-              ? <Fragment>
-              <NavDropdown title={this.state.username} id="Navdropdown">
-              <LinkContainer exact to="/" activeClassName=""> 
-              <MenuItem eventkey="1">Main Page</MenuItem>
-              </LinkContainer>
-              <LinkContainer exact to="/profile" activeClassName="">
-              <MenuItem eventkey="2">User Profile</MenuItem>
-              </LinkContainer>
-              <LinkContainer exact to="/personalproject" activeClassName="">
-              <MenuItem eventkey="3">Personal Project</MenuItem>
-              </LinkContainer>
-
-              <MenuItem divider />
-              <LinkContainer exact to="/" activeClassName="">
-              <MenuItem eventkey="4" onClick={this.handleLogout}>Logout</MenuItem>
-              </LinkContainer>
-              </NavDropdown>
-                </Fragment>
-              : <Fragment>
-                <LinkContainer to="/signup">
-                  <NavItem>Signup</NavItem>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                  <NavItem>Login</NavItem>
-                </LinkContainer>
-    </Fragment>
-}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-  );  
-}
-
-//Two editions, according whether the user is admin, render the according part.
-render() {
-//this is what will be used in the child class, super() and the this.props
-  const childProps = {
-      isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated,
-      isAdmin:this.state.isAdmin,   //this is going to pass to the child components.** can't miss .state.
-      userIsAdmin:this.userIsAdmin,
-
-      username:this.state.username,  //this is going to show in the navbar.
-      setUserName:this.setUserName,
-
-      isManager:this.state.isManager, //store the info of user.
-  };
-  return (
-    <div className="App container">
-      {this.state.isAdmin===true
-        ?this.renderAdminEdition()
-        :this.renderStaffEdition()}
       <Routes childProps={childProps} />
     </div>
   );

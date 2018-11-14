@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
-import "./Staff.css";
+import "./StaffList.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 //this is used to list the staff.
 
-export default class Staff extends Component {
+export default class StaffList extends Component {
   constructor(props) {
     super(props);
 
@@ -42,16 +42,16 @@ export default class Staff extends Component {
         i !== 0
           ? <LinkContainer
               key={user.userid}
-              to={`/profile/${user.userid}`}   
+              to={`/staff/${user.userid}`}   
             >   
-              <ListGroupItem header={user.userid}>
+              <ListGroupItem header={user.username}>
                 {"email: " + user.email}   
                 {"    Created: " + new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
           : <LinkContainer
               key="new"
-              to="/profile/new"
+              to="/staff/new"
             >
               <ListGroupItem>
                 <h4>

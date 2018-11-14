@@ -1,24 +1,28 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl,ButtonToolbar, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
-import "./NewProfile.css";
+import "./NewUser.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 
-export default class NewProfile extends Component {
+export default class NewUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: null,
+      username:"",
       email:"",
       gender: "",
+      tel:"",
       department:"",
       skill:"",
-      pname:""
+      interest:"",
+      pname:"",
+      ismanager:false,
     };
   }
 //i think i should add the part of email. 
-  validateProfile() {
+  validateUser() {
     return this.state.gender.length > 0;
   }
 // the dapartment should not empty.
@@ -35,12 +39,16 @@ export default class NewProfile extends Component {
     this.setState({ isLoading: true });
 
     try {
-      await this.createProfile({
+      await this.createUser({
+        username:this.state.username,
         email: this.state.email,
+        tel:this.state.tel,
         gender: this.state.gender,
         department:this.state.department,
         skill:this.state.skill,
+        interest:this.state.interest,
         pname: this.state.pname,
+        ismanager:this.state.ismanager,
       });
       this.props.history.push("/stafflist");
     } catch (e) {
@@ -49,21 +57,37 @@ export default class NewProfile extends Component {
     }
   }
 
-  createProfile(profile) {
+  createUser(user) {
     return API.post("staff", "/staff", {
-      body: profile
+      body: user
     });
   }
 //the projects api is the api endpoint i want invoke.
   render() {
     return (
-      <div className="NewProfile">      
+      <div className="NewUser">      
         <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="username">
+          <ControlLabel>username</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.username}
+              componentClass="textarea"
+            />
+          </FormGroup>
           <FormGroup controlId="email">
           <ControlLabel>Email</ControlLabel>
             <FormControl
               onChange={this.handleChange}
               value={this.state.email}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <FormGroup controlId="tel">
+          <ControlLabel>phone number</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.tel}
               componentClass="textarea"
             />
           </FormGroup>
@@ -91,6 +115,14 @@ export default class NewProfile extends Component {
               componentClass="textarea"
             />
             </FormGroup>
+          <FormGroup controlId="interest">
+          <ControlLabel>interest</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.interest}
+              componentClass="textarea"
+            />
+          </FormGroup>
           <FormGroup controlId="pname">
             <ControlLabel>project name</ControlLabel>
             <FormControl
@@ -103,7 +135,7 @@ export default class NewProfile extends Component {
           <LoaderButton
             bsStyle="primary"
             bsSize="large"
-            disabled={!this.validateProfile()}
+            disabled={!this.validateUser()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Create"

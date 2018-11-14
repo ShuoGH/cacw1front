@@ -4,10 +4,9 @@ import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootst
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./User.css";
-//change it later ---16:09 14-11-2018
 import { LinkContainer } from "react-router-bootstrap";
 
-export default class Profile extends Component {
+export default class User extends Component {
   constructor(props) {
     super(props);
 
@@ -30,7 +29,7 @@ export default class Profile extends Component {
 
   async componentDidMount() {
     try {
-      // console.log("print the state:",this.state.user)  
+      console.log("print the state:",this.state.user)   //output: null
       const user = await this.getProfile();
       console.log("bug code",user);
       const { username,email,tel,gender,department,skill,interest,pname } = user;
@@ -46,8 +45,8 @@ export default class Profile extends Component {
         interest,
         pname,
       });
-      // console.log("print the props:",this.props.match.params.id)  
-      // console.log("print the state user:",this.state.user)    
+      console.log("print the props:",this.props.match.params.id)   //use this to print the string trying to know the bug.---13:03 13-11-2018
+      console.log("print the state user:",this.state.user)    //output is wrong.
     } catch (e) {
       alert(e);
     }
@@ -55,7 +54,8 @@ export default class Profile extends Component {
 
   getProfile() {
     console.log("print the props in the function getProfile:",this.props.match.params.id)
-    return API.get("profile", `/profile/${this.props.match.params.id}`);
+    return API.get("staff", `/staff/${this.props.match.params.id}`);
+    //the front end is right. but there are some problems in the API function.
   }
   validateForm() {
     return this.state.gender.length > 0;
@@ -68,7 +68,7 @@ export default class Profile extends Component {
   }
 
   saveProfile(user) {
-    return API.put("profile", `/profile/${this.props.match.params.id}`, {
+    return API.put("staff", `/staff/${this.props.match.params.id}`, {
       body: user
     });
   }
@@ -197,5 +197,6 @@ export default class Profile extends Component {
 
 //1. this is the page of updating the user.  ---11:51 12-11-2018 finish    
 //2. should change the lambda function, to put the email and some other attr into the table. ---13:49 12-11-2018 finish
-//3. there are a lot of bugs in this part. ---22:19 12-11-2018 finish
-//4. the admin's function on creating the user is a bug. ---10:31 13-11-2018  finish
+//3. there are a lot of bugs in this part. ---22:19 12-11-2018 ... 
+//4. the admin's function on creating the user is a bug. ---10:31 13-11-2018  ...
+//   ...................API invoking is wrong.
