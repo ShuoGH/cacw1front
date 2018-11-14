@@ -14,23 +14,30 @@ export default class Login extends Component {
       isLoading:false,
       email: "",
       password: "",
-      isForget:null,
-      forgetEmail:'',
-      submitForget:null,
-      verifyCode:"",
-      newPassword:"",
+      isForget:null,        //indicate whether user click the button "forget password"
+      forgetEmail:'',       //store the infomation of email user input.
+      submitForget:null,   //input the email and submit, then this flag changed, and then render the newpassword from.
+      verifyCode:"",        //store the verify code user input. 
+      newPassword:"",       //store new password.
+      confirmPassword:"",
     };
   }
   //Log in: validform to check the input
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-
+  validateForgetForm() {
+    return this.state.forgetEmail.length > 0;
+  }
+  validateNewPasswordForm() {
+    return this.state.verifyCode.length > 0 &&
+            this.state.newPassword === this.state.confirmPassword;
+  }
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
-    console.log([event.target.id],[event.target.value])
+    // console.log([event.target.id],[event.target.value])  //use the test the input
   }
   //Log in: to submit to log in.
   handleSubmit = async event => {
@@ -70,8 +77,10 @@ export default class Login extends Component {
     try {
       console.log("you will set new password.")
       Auth.forgotPasswordSubmit(this.state.forgetEmail, this.state.verifyCode, this.state.newPassword)
-          // .then(data => console.log(data))
-          // .catch(err => console.log(err));
+          .then(data => console.log(data))
+          .catch(err => console.log(err));
+      this.props.history.push("/");
+      //this part is not very perfect.---11:23 14-11-2018
     } catch (e) {
       alert(e);
     }
@@ -93,13 +102,13 @@ export default class Login extends Component {
           <LoaderButton
             block
             bsSize="large"
-            disabled={!this.validateForm()}
+            disabled={!this.validateForgetForm()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Enter"
             loadingText="Logging in…"
           />
-          <LinkContainer to="/">
+          <LinkContainer to="/" activeClassName="">
           <LoaderButton
             block
             bsStyle="default"
@@ -120,7 +129,7 @@ export default class Login extends Component {
             <ControlLabel>Input your verify code</ControlLabel>   
             <FormControl
               autoFocus
-              // type="email"
+              type="tel"
               placeholder="Enter verify code"
               value={this.state.verifyCode}
               onChange={this.handleChange}
@@ -129,25 +138,31 @@ export default class Login extends Component {
           <FormGroup controlId="newPassword" bsSize="large">
             <ControlLabel>Input your new password</ControlLabel>   
             <FormControl
-              // autoFocus
-              // type="email"
               placeholder="Enter your new password"
               value={this.state.newPassword}
               onChange={this.handleChange}
+              type="password"
             />
           </FormGroup>
-          <LinkContainer to="/">
+          <FormGroup controlId="confirmPassword" bsSize="large">
+            <ControlLabel>Input your new password</ControlLabel>   
+            <FormControl
+              placeholder="Enter new password again"
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
           <LoaderButton
             block
             bsSize="large"
-            disabled={!this.validateForm()}
+            disabled={!this.validateNewPasswordForm()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Enter"
             loadingText="Logging in…"
           />
-          </LinkContainer>
-          <LinkContainer to="/">
+          <LinkContainer to="/" activeClassName="">
           <LoaderButton
             block
             bsStyle="default"
