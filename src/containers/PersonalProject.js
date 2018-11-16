@@ -72,18 +72,18 @@ export default class PersonalProjects extends Component {
   // }
   //use the concat and map function/
   renderProject(personalproject){
-  console.log(personalproject, this.state.personalproject)
-  return [{}].concat(personalproject).map(
-    (project,i)=> 
-      i!=0
-      ?<ListGroupItem key={project.projectid}>
-        <h1>{""+project.pname}</h1>
-        {"manager:"+project.pmanager}
-        {"Created: " + new Date(project.createdAt).toLocaleString()}
-        </ListGroupItem>
-      :<ListGroupItem key="head">
-        <h1> personal project</h1>
-        </ListGroupItem>)
+    console.log(personalproject, this.state.personalproject)
+    return [{}].concat(personalproject).map(
+      (project,i)=> 
+        i!=0
+        ?<ListGroupItem key={project.projectid}>
+          <h1>{""+project.pname}</h1>
+          {"manager:"+project.pmanager}
+          {"Created: " + new Date(project.createdAt).toLocaleString()}
+          </ListGroupItem>
+        :<ListGroupItem key="head">
+          <h1> personal project</h1>
+          </ListGroupItem>)
   }
 
   render() {

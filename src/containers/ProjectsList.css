@@ -9,3 +9,9 @@
 .ProjectsList .projects p {
   color: #666;
 }
+.ProjectsList .searchForm {
+  padding: 8px 0;
+}
+.ProjectsList .listByStatus {
+  padding: 8px 0;
+}
