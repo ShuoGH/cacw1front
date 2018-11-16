@@ -7,7 +7,7 @@ import Signup from "./containers/Signup";
 import NewProject from "./containers/NewProject";
 import Projects from "./containers/Projects";
 import ProjectsList from "./containers/ProjectsList";
-import PersonalProjects from "./containers/PersonalProjects";
+import PersonalProjects from "./containers/PersonalProject";
 import Profile from "./containers/Profile";
 import StaffList from "./containers/StaffList";
 import User from "./containers/User";
@@ -27,7 +27,7 @@ export default ({ childProps }) =>
     <AuthenticatedRoute path="/stafflist" exact component={StaffList} props={childProps} />
 
     <AuthenticatedRoute path="/profile" exact component={Profile} props={childProps} />
-    <AuthenticatedRoute path="/personalprojects" exact component={PersonalProjects} props={childProps} />
+    <AuthenticatedRoute path="/personalproject" exact component={PersonalProjects} props={childProps} />
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
   </Switch>;

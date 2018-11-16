@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl,ButtonToolbar, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl,ButtonToolbar, ControlLabel, Jumbotron } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
-import { API } from "aws-amplify";
+import { API} from "aws-amplify";
 import "./Home.css";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -22,6 +22,9 @@ export default class Home extends Component {
       ismanager:"",
       isFirst: null,
       //isFirst: indicate whether the user is a new user who haven't register a new username.
+      toaddress:"",
+      subject:"",
+      text:"",
     }; 
     this.checkIsAdmin=this.checkIsAdmin.bind(this);
   }
@@ -32,6 +35,7 @@ export default class Home extends Component {
       //if the user is the first time to log in: the API can't fetch the info of him
       //and then, he should go to init his infomation first
       console.log("going to fetch the user info from the dynamoDB.")
+
       //test whether the can get the current user info
       const user = await this.getProfile();
       const { username,email,tel,gender,department,skill,interest,pname,ismanager } = user;
@@ -52,9 +56,15 @@ export default class Home extends Component {
       this.props.setUserName(username) 
       //set the username, and then it show in the nav bar.
       this.checkIsAdmin()
-      console.log(this.props)
+      // console.log(this.props)
       this.setState({isFirst:false})
       console.log("log from the success")
+    //   this.setState({
+    //   toaddress:"sa2y18@soton.ac.uk",
+    //   subject:"shit code",
+    //   text:"fuck you idot",
+    // })
+
     } catch (e) {
       //when failed to the get the info, change the flag to the true. it's the user's first time to log into the system.
       this.setState({isFirst:true})
@@ -117,7 +127,7 @@ export default class Home extends Component {
       body: user
     });
   }
-  
+
   renderFillProfile(){
     return(
         <div className="newuser">
@@ -215,9 +225,10 @@ export default class Home extends Component {
   renderLander() {
     return (
       <div className="lander">
+      <Jumbotron>
       <h1>welcome {this.state.username} !</h1>
-      <h1>this is going to use the breadcum nav bar. 
-      and there are also a lot of code here.</h1>
+
+      </Jumbotron>
       </div>
     );
   }

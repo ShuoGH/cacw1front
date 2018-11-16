@@ -138,7 +138,7 @@ renderStaffEdition(){
               <LinkContainer exact to="/profile" activeClassName="">
               <MenuItem eventkey="2">User Profile</MenuItem>
               </LinkContainer>
-              <LinkContainer exact to="/personalprojects" activeClassName="">
+              <LinkContainer exact to="/personalproject" activeClassName="">
               <MenuItem eventkey="3">Personal Project</MenuItem>
               </LinkContainer>
 

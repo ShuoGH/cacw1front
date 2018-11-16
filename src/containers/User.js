@@ -53,7 +53,7 @@ export default class User extends Component {
   }
 
   getProfile() {
-    // console.log("print the props in the function getProfile:",this.props.match.params.id)
+    console.log("print the props in the function getProfile:",this.props,this.props.match)
     return API.get("staff", `/staff/${this.props.match.params.id}`);
     //the front end is right. but there are some problems in the API function.
   }

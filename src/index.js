@@ -34,6 +34,16 @@ Amplify.configure({
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION
       },
+      {
+        name: "projectslist",
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION
+      },
+      {
+        name: "sendemail",
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION
+      },
     ]
   }
 });

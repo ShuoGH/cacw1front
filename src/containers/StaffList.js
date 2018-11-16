@@ -23,6 +23,7 @@ export default class StaffList extends Component {
     try {
       const staff = await this.staff();
       this.setState({ staff });
+      console.log("when did i",staff)
     } catch (e) {
       alert(e);
     }
@@ -37,6 +38,7 @@ export default class StaffList extends Component {
   //this is the url when you invoke your api.
   //here you can get the staff properly. but why can't work after get in the specific item? ---13:39 13-11-2018 
   renderStaffList(staff) {
+   console.log(staff)
     return [{}].concat(staff).map(
       (user, i) =>
         i !== 0
@@ -49,7 +51,7 @@ export default class StaffList extends Component {
                 {"    Created: " + new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
-          : <ListGroupItem>
+          : <ListGroupItem key="head">  
                 <h4>
                   Staff in Company
                 </h4>
@@ -67,7 +69,7 @@ export default class StaffList extends Component {
       </div>
     );
   }
-
+//only when the call was called successfully, the components will be rendered.
   render() {
     return (
       <div className="Staff">
