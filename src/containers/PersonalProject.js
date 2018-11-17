@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { form,ListGroupItem, FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
+import { form,ListGroupItem, FormGroup, FormControl, ButtonToolbar, ControlLabel,Form} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./PersonalProject.css";
@@ -57,19 +57,6 @@ export default class PersonalProjects extends Component {
   	return API.get("projectslist",`/projectslist/personal`,myInit)
   }
 
-  // renderProject(personalproject){
-  //   console.log(this.state.isLoading, personalproject)
-  //   return (
-  //     <form>
-  //     <ListGroupItem key="head">  
-  //     <h4>personal project</h4>
-  //     </ListGroupItem>
-  //         <ListGroupItem header={personalproject[0].pname}>
-
-  //         </ListGroupItem>
-  //     </form>
-  //   );
-  // }
   //use the concat and map function/
   renderProject(personalproject){
     console.log(personalproject, this.state.personalproject)
@@ -78,11 +65,20 @@ export default class PersonalProjects extends Component {
         i!=0
         ?<ListGroupItem key={project.projectid}>
           <h1>{""+project.pname}</h1>
-          {"manager:"+project.pmanager}
+          <Form inline>
+          <FormGroup>
+          <ControlLabel>Manager:</ControlLabel>{" "}
+            {project.pmanager}
+          </FormGroup>{" "}
+          <FormGroup>
+          <ControlLabel>Status:</ControlLabel>{" "}              
+            {project.pstatus} 
+          </FormGroup> 
+          </Form>
           {"Created: " + new Date(project.createdAt).toLocaleString()}
           </ListGroupItem>
         :<ListGroupItem key="head">
-          <h1> personal project</h1>
+          <h1> Your Projects</h1>
           </ListGroupItem>)
   }
 

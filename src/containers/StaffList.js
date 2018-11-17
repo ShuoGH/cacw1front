@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem,Form,FormGroup,ControlLabel } from "react-bootstrap";
 import "./StaffList.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
@@ -47,8 +47,17 @@ export default class StaffList extends Component {
               to={`/staff/${user.userid}`}   
             >   
               <ListGroupItem header={user.username}>
-                {"email: " + user.email}   
-                {"    Created: " + new Date(user.createdAt).toLocaleString()}
+              <Form inline>
+              <FormGroup>
+              <ControlLabel>Email:</ControlLabel>{" "}
+                {user.email}
+              </FormGroup>{" "}
+              <FormGroup>
+              <ControlLabel>Project:</ControlLabel>{" "}              
+                {user.pname} 
+              </FormGroup> 
+              </Form>   
+                {"Created: " + new Date(user.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
           : <ListGroupItem key="head">  

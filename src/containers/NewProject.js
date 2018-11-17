@@ -106,6 +106,7 @@ export default class NewProject extends Component {
             value={this.state.pmanager}
             componentClass="select" 
             onChange={this.handleChange}>
+            <option value="">..</option>
                {this.createSelectItems(this.state.allStaff)}
           </FormControl>
            </FormGroup>{" "}
@@ -117,6 +118,7 @@ export default class NewProject extends Component {
                 onChange={this.handleChange}
                 value={this.state.pstatus}
                 componentClass="select">
+              <option value="">..</option>
               <option value="pending">Pending</option>
               <option value="active">Active</option>
               <option value="completed">Completed</option>

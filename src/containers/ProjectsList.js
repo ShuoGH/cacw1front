@@ -142,6 +142,16 @@ export default class ProjectsList extends Component {
               to={`/projects/${project.projectid}`}
             >
               <ListGroupItem header={project.pname}>
+              <Form inline>
+              <FormGroup>
+              <ControlLabel>Manager:</ControlLabel>{" "}
+                {project.pmanager}
+              </FormGroup>{" "}
+              <FormGroup>
+              <ControlLabel>Status:</ControlLabel>{" "}              
+                {project.pstatus} 
+              </FormGroup> 
+              </Form>   
                 {"Created: " + new Date(project.createdAt).toLocaleString()}
               </ListGroupItem>
             </LinkContainer>
