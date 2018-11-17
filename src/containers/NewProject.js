@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl,ButtonToolbar,ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl,ButtonToolbar,ControlLabel,Form } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
 import "./NewProject.css";
 import { API } from "aws-amplify";
@@ -13,8 +13,26 @@ export default class NewProject extends Component {
       pname: "",
       pmanager: "",
       pstatus: "",
+
+      allStaff:[],
     };
   }
+  async componentDidMount() {
+    if (!this.props.isAuthenticated) {
+      return;
+    }
+
+    try {
+      const allStaff = await this.getAllStaff();
+      this.setState({ allStaff });
+      console.log("get all staff",allStaff)
+    } catch (e) {
+      alert(e);
+    }
+
+    this.setState({ isLoading: false });
+  }
+
 //validate the project name, is should be bigger than 0. 
   validateForm() {
     return this.state.pname.length > 0;
@@ -23,7 +41,9 @@ export default class NewProject extends Component {
   handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
-    });
+    })
+    // console.log(event,event.target.id,event.target.value);
+    // console.log("ha?",this.state.pmanager)
   }
 //handle the submit, to invoke the API and do action on the database.
   handleSubmit = async event => {
@@ -32,6 +52,7 @@ export default class NewProject extends Component {
     this.setState({ isLoading: true });
 
     try {
+      console.log(this.state)
       await this.createProject({
         pname: this.state.pname,
         pmanager:this.state.pmanager,
@@ -49,6 +70,22 @@ export default class NewProject extends Component {
       body: project
     });
   }
+
+  getAllStaff(){
+    return API.get("staff","/staff");
+  }
+  //Create the options dynamically based on the projects list, to allocate the project to a user.
+  createSelectItems(allStaff) {
+      let items = [];         
+      for (let i = 0; i < allStaff.length; i++) {      
+      console.log("in the createselectitems",allStaff[i].username) 
+          items.push(<option key={i} value={allStaff[i].username}>{allStaff[i].username}</option>);   
+            // console.log(allProject[i])
+      }
+       return items;
+    }  
+
+
 //the projects api is the api endpoint i want invoke.
   render() {
     return (
@@ -64,21 +101,28 @@ export default class NewProject extends Component {
             />
           </FormGroup>
           <FormGroup controlId="pmanager">
-          <ControlLabel>Project Manager</ControlLabel>
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.pmanager}
-              componentClass="textarea"
-            />
-          </FormGroup>
+          <ControlLabel>Project Manager:</ControlLabel>{" "}
+          <FormControl 
+            value={this.state.pmanager}
+            componentClass="select" 
+            onChange={this.handleChange}>
+               {this.createSelectItems(this.state.allStaff)}
+          </FormControl>
+           </FormGroup>{" "}
+
+          <Form inline>
           <FormGroup controlId="pstatus">
-          <ControlLabel>status</ControlLabel>
+          <ControlLabel>status:</ControlLabel>{" "}
             <FormControl
-              onChange={this.handleChange}
-              value={this.state.status}
-              componentClass="textarea"
-            />
+                onChange={this.handleChange}
+                value={this.state.pstatus}
+                componentClass="select">
+              <option value="pending">Pending</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+              </FormControl>
           </FormGroup>
+          </Form>
           <ButtonToolbar className="pull-right">
           <LoaderButton
             bsStyle="primary"

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar, ControlLabel, Form, Checkbox} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./User.css";
@@ -23,6 +23,9 @@ export default class User extends Component {
       interest:"",
       pname:"",
       ismanager:"",
+
+      allProject:[],
+
     };
     // console.log("test",this.props)
   }
@@ -32,7 +35,7 @@ export default class User extends Component {
       // console.log("print the state:",this.state.user)   
       const user = await this.getProfile();
       // console.log("bug code",user);
-      const { username,email,tel,gender,department,skill,interest,pname } = user;
+      const { username,email,tel,gender,department,skill,interest,pname,ismanager } = user;
 //the project should exist in the projects list ---11:46 12-11-2018
       this.setState({
         user,
@@ -44,12 +47,22 @@ export default class User extends Component {
         skill,
         interest,
         pname,
+        ismanager,
       });
-      // console.log("print the props:",this.props.match.params.id)   //use this to print the string trying to know the bug.---13:03 13-11-2018
-      // console.log("print the state user:",this.state.user)    //output is wrong.
+      console.log(this.state)
+      // if(ismanager==null){
+      //   console.log("he is not a manager.")
+      // }
+      const allProject=await this.getAllProjects();
+      this.setState({ allProject});
     } catch (e) {
-      alert(e);
+      console.log(e)
     }
+  }
+  // invoke the api to get all projects.
+  getAllProjects() {
+    console.log("to get the api")
+    return API.get("projects", "/projects");
   }
 
   getProfile() {
@@ -57,6 +70,7 @@ export default class User extends Component {
     return API.get("staff", `/staff/${this.props.match.params.id}`);
     //the front end is right. but there are some problems in the API function.
   }
+
   validateForm() {
     return this.state.gender.length > 0;
   }
@@ -91,6 +105,7 @@ export default class User extends Component {
         skill: this.state.skill,
         interest: this.state.interest,
         pname:this.state.pname,
+        ismanager:this.state.ismanager,
         
       });
       this.props.history.push("/stafflist");
@@ -122,57 +137,73 @@ export default class User extends Component {
     }
   }
 
+//Create the options dynamically based on the projects list, to allocate the project to a user.
+ createSelectItems(allProject) {
+     let items = [];         
+     for (let i = 0; i < allProject.length; i++) {       
+          items.push(<option key={i} value={allProject[i].pname}>{allProject[i].pname}</option>);   
+          // console.log(allProject[i])
+     }
+     return items;
+ }  
+
   render() {
     return (
       <div className="Profile">
         {this.state.user &&
           <form onSubmit={this.handleSubmit}>
+          <h1> User Information</h1>
+          <h5>   </h5>
+            <Form inline>
             <FormGroup controlId="username">
-            <ControlLabel>username</ControlLabel>
+            <ControlLabel>Username:</ControlLabel>{" "}
               <FormControl
+                type="text"
                 onChange={this.handleChange}
                 value={this.state.username}
-                componentClass="textarea"
               />
-            </FormGroup>
-            <FormGroup controlId="email">
-            <ControlLabel>Email</ControlLabel>
+            </FormGroup>{" "}
+            <FormGroup controlId="gender">
+            <ControlLabel>Gender:</ControlLabel>
               <FormControl
                 onChange={this.handleChange}
+                value={this.state.gender}
+                componentClass="select">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              </FormControl>
+            </FormGroup>{" "}
+            <FormGroup controlId="department">
+            <ControlLabel>Department: </ControlLabel>{" "}
+              <FormControl
+              type="text"
+                onChange={this.handleChange}
+                value={this.state.department}
+              />
+            </FormGroup>
+            </Form>
+            <FormGroup controlId="email">{" "}
+            <ControlLabel>Email</ControlLabel>
+              <FormControl
+                type="Email"
+                onChange={this.handleChange}
                 value={this.state.email}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="tel">
             <ControlLabel>phone number</ControlLabel>
               <FormControl
+              type="text"
                 onChange={this.handleChange}
                 value={this.state.tel}
-                componentClass="textarea"
-              />
-            </FormGroup>
-            <FormGroup controlId="gender">
-            <ControlLabel>gender</ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.gender}
-                componentClass="textarea"
-              />
-            </FormGroup>
-            <FormGroup controlId="department">
-            <ControlLabel>Department</ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.department}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="skill">
             <ControlLabel>Skill</ControlLabel>
               <FormControl
+              type="text"
                 onChange={this.handleChange}
                 value={this.state.skill}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="interest">
@@ -183,14 +214,18 @@ export default class User extends Component {
                 componentClass="textarea"
               />
             </FormGroup>
+             <ControlLabel>              </ControlLabel>
+            <Form inline>
             <FormGroup controlId="pname">
-            <ControlLabel>Project Name</ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.pname}
-                componentClass="textarea"
-              />
-            </FormGroup>
+            <ControlLabel>Project name: </ControlLabel>{" "}
+            <FormControl 
+              value={this.state.pname}
+              componentClass="select" 
+              onChange={this.handleChange}>
+                 {this.createSelectItems(this.state.allProject)}
+            </FormControl>
+             </FormGroup>{" "}
+             </Form>
             <ButtonToolbar className="pull-right">
             <LoaderButton
               

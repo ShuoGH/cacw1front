@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar, ControlLabel,Form} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./Profile.css";
@@ -54,7 +54,7 @@ export default class Profile extends Component {
   }
 
   getProfile() {
-    console.log("print the props in the function getProfile:",this.props.match.params.id)
+    // console.log("print the props in the function getProfile:",this.props.match.params.id)
     return API.get("profile", `/profile/${this.props.match.params.id}`);
   }
   validateForm() {
@@ -90,7 +90,7 @@ export default class Profile extends Component {
         pname:this.state.pname,
         
       });
-      this.props.history.push("/stafflist");
+      this.props.history.push("/");
     } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
@@ -103,52 +103,44 @@ export default class Profile extends Component {
         {this.state.user &&
           <form onSubmit={this.handleSubmit}>
           <h1> you can update your profile here</h1>
+          <Form inline>
             <FormGroup controlId="username">
-            <ControlLabel>username</ControlLabel>
+            <ControlLabel>username:</ControlLabel>{" "}
+              <FormControl.Static>{this.state.username}</FormControl.Static>
+            </FormGroup>{" "}
+            <FormGroup controlId="gender">
+            <ControlLabel>gender:</ControlLabel>{" "}
               <FormControl
                 onChange={this.handleChange}
-                value={this.state.username}
-                componentClass="textarea"
-              />
+                value={this.state.gender}
+                componentClass="select">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              </FormControl>
             </FormGroup>
+            </Form>
             <FormGroup controlId="email">
             <ControlLabel>Email</ControlLabel>
               <FormControl
+              type="Email"
                 onChange={this.handleChange}
                 value={this.state.email}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="tel">
             <ControlLabel>phone number</ControlLabel>
               <FormControl
+              type="text"
                 onChange={this.handleChange}
                 value={this.state.tel}
-                componentClass="textarea"
-              />
-            </FormGroup>
-            <FormGroup controlId="gender">
-            <ControlLabel>gender</ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.gender}
-                componentClass="textarea"
-              />
-            </FormGroup>
-            <FormGroup controlId="department">
-            <ControlLabel>Department</ControlLabel>
-              <FormControl
-                onChange={this.handleChange}
-                value={this.state.department}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="skill">
             <ControlLabel>Skill</ControlLabel>
               <FormControl
+              type="text"
                 onChange={this.handleChange}
                 value={this.state.skill}
-                componentClass="textarea"
               />
             </FormGroup>
             <FormGroup controlId="interest">
@@ -159,14 +151,21 @@ export default class Profile extends Component {
                 componentClass="textarea"
               />
             </FormGroup>
-            <FormGroup controlId="pname">
-            <ControlLabel>Project Name</ControlLabel>
+             <ControlLabel>              </ControlLabel>
+            <FormGroup controlId="department">
+            <ControlLabel>Department</ControlLabel>
               <FormControl
+              type="text"
                 onChange={this.handleChange}
-                value={this.state.pname}
-                componentClass="textarea"
+                value={this.state.department}
               />
             </FormGroup>
+            <Form inline>
+            <FormGroup controlId="pname">
+            <ControlLabel>Project Name: </ControlLabel>
+              <FormControl.Static>{this.state.pname}</FormControl.Static>
+            </FormGroup>{"    "}
+            </Form>
             <ButtonToolbar className="pull-right">
             <LoaderButton
               
@@ -179,7 +178,7 @@ export default class Profile extends Component {
               loadingText="Saving…"
             />
 
-            <LinkContainer to="/stafflist">
+            <LinkContainer to="/">
             <LoaderButton
               
               bsStyle="default"

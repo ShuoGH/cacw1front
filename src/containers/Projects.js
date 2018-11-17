@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
-import { FormGroup, FormControl, ButtonToolbar, ControlLabel} from "react-bootstrap";
+import { FormGroup, FormControl, ButtonToolbar, ControlLabel,Form} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 // import config from "../config";
 import "./Projects.css";
@@ -15,20 +15,29 @@ export default class Projects extends Component {
       isDeleting: null,
       project: null,
       pname: "",
+      pmanager:"",
+      pstatus:"",
+
+      allStaff:[],
     };
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     try {
       const project = await this.getProject();
+      // console.log(project);
       const { pname,pmanager,pstatus } = project;
 
+      const allStaff = await this.getAllStaff();
+      this.setState({ allStaff });
+      
       this.setState({
         project,
         pname,
         pmanager,
-        pstatus
+        pstatus,
       });
+      // console.log(this.state)
     } catch (e) {
       alert(e);
     }
@@ -97,6 +106,21 @@ export default class Projects extends Component {
       this.setState({ isDeleting: false });
     }
   }
+
+  getAllStaff(){
+    return API.get("staff","/staff");
+  }
+  //Create the options dynamically based on the projects list, to allocate the project to a user.
+  createSelectItems(allStaff) {
+      let items = [];         
+      for (let i = 0; i < allStaff.length; i++) {      
+      // console.log("in the createselectitems",allStaff[i].username) 
+          items.push(<option key={i} value={allStaff[i].username}>{allStaff[i].username}</option>);   
+            // console.log(allProject[i])
+      }
+       return items;
+    }  
+
   render() {
     return (
       <div className="Projects">
@@ -111,21 +135,27 @@ export default class Projects extends Component {
               />
             </FormGroup>
           <FormGroup controlId="pmanager">
-          <ControlLabel>Project Manager</ControlLabel>
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.pmanager}
-              componentClass="textarea"
-            />
-          </FormGroup>
+          <ControlLabel>Project Manager:</ControlLabel>{" "}
+          <FormControl 
+            value={this.state.pmanager}
+            componentClass="select" 
+            onChange={this.handleChange}>
+               {this.createSelectItems(this.state.allStaff)}
+          </FormControl>
+           </FormGroup>{" "}
+          <Form inline>
           <FormGroup controlId="pstatus">
-          <ControlLabel>status</ControlLabel>
+          <ControlLabel>status:</ControlLabel>{" "}
             <FormControl
-              onChange={this.handleChange}
-              value={this.state.pstatus}
-              componentClass="textarea"
-            />
+                onChange={this.handleChange}
+                value={this.state.pstatus}
+                componentClass="select">
+              <option value="pending">Pending</option>
+              <option value="active">Active</option>
+              <option value="completed">Completed</option>
+              </FormControl>
           </FormGroup>
+          </Form>
             <ButtonToolbar className="pull-right">
             <LoaderButton
               

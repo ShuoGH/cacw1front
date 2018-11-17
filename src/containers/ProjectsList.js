@@ -99,8 +99,6 @@ export default class ProjectsList extends Component {
   handleCompletedList = async event => {
     event.preventDefault();
 
-    this.setState({ isLoading: true });
-
     try {
       const listResult= await this.getCompletedList();
       console.log("this is pending list",listResult)
