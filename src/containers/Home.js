@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl,ButtonToolbar, ControlLabel, Jumbotron } from "react-bootstrap";
+import { FormGroup, FormControl,ButtonToolbar, ControlLabel, Jumbotron, Form } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton"; 
 import { API} from "aws-amplify";
 import "./Home.css";
@@ -14,11 +14,11 @@ export default class Home extends Component {
       username:"",
       email: "",
       tel:"",
-      gender:"",
-      department:"",
+      gender:" ",
+      department:" ",
       skill:"",
       interest:"",
-      pname:"",
+      pname:" ",
       ismanager:"",
       isFirst: null,
       //isFirst: indicate whether the user is a new user who haven't register a new username.
@@ -132,54 +132,51 @@ export default class Home extends Component {
     return(
         <div className="newuser">
         <h1> Welcome to SHUO company! </h1>
-        <h2> You need to compelete your profile first. </h2>
+        <h2> You need to complete your profile first. </h2>
           <form onSubmit={this.handleSubmit}>
+          <Form inline>
           <FormGroup controlId="username">
-          <ControlLabel>username</ControlLabel>
+          <ControlLabel>username:</ControlLabel>
             <FormControl
+              type="text"
               onChange={this.handleChange}
               value={this.state.username}
-              componentClass="textarea"
             />
           </FormGroup>
+            <FormGroup controlId="gender">
+            <ControlLabel>Gender:</ControlLabel>{" "}
+              <FormControl
+                onChange={this.handleChange}
+                value={this.state.gender}
+                componentClass="select">
+              <option value=" ">..</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              </FormControl>
+            </FormGroup>
+          </Form>
           <FormGroup controlId="email">
           <ControlLabel>Email</ControlLabel>
             <FormControl
+            type="Email"
               onChange={this.handleChange}
               value={this.state.email}
-              componentClass="textarea"
             />
           </FormGroup>
           <FormGroup controlId="tel">
-          <ControlLabel>phone number</ControlLabel>
+          <ControlLabel>Phone number</ControlLabel>
             <FormControl
+            type="text"
               onChange={this.handleChange}
               value={this.state.tel}
-              componentClass="textarea"
-            />
-          </FormGroup>
-          <ControlLabel>Gender</ControlLabel>
-          <FormGroup controlId="gender">
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.gender}
-              componentClass="textarea"
-            />
-          </FormGroup>
-          <FormGroup controlId="department">
-            <ControlLabel>department</ControlLabel>
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.department}
-              componentClass="textarea"
             />
           </FormGroup>
           <FormGroup controlId="skill">
             <ControlLabel>skill</ControlLabel>
             <FormControl
+            type="text"
               onChange={this.handleChange}
               value={this.state.skill}
-              componentClass="textarea"
             />
             </FormGroup>
           <FormGroup controlId="interest">
@@ -190,14 +187,15 @@ export default class Home extends Component {
               componentClass="textarea"
             />
           </FormGroup>
-          <FormGroup controlId="pname">
-            <ControlLabel>project name</ControlLabel>
+          <FormGroup controlId="department">
+            <ControlLabel>department</ControlLabel>
             <FormControl
+            type="text"
               onChange={this.handleChange}
-              value={this.state.pname}
-              componentClass="textarea"
+              value={this.state.department}
             />
-            </FormGroup>
+          </FormGroup>
+
           <ButtonToolbar className="pull-right">
           <LoaderButton
             bsStyle="primary"

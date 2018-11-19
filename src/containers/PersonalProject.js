@@ -32,11 +32,15 @@ export default class PersonalProjects extends Component {
         pname,
       });  
       console.log("print the state user:",this.state.pname) 
-      const personalproject =await this.getPersonalProject()
-      // this.setState({ personalproject })
-      this.setState({isLoading:false, personalproject: personalproject.data})
+      if(pname===" "){
+      this.setState({personalproject:[{}]}) 
+      }else{
+        const personalproject =await this.getPersonalProject()
+        this.setState({isLoading:false, personalproject: personalproject.data})
+      }
+      
       //this is important, so that the personal project can pass to the personal project state.
-      console.log(personalproject)  
+      console.log(this.state.personalproject)  
     } catch (e) {
       alert(e);
     }
