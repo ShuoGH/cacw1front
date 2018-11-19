@@ -203,7 +203,7 @@ export default class ProjectsList extends Component {
         i !== 0
           ? <LinkContainer
               key={result.projectid}
-              to={`/project/${result.projectid}`}   
+              to={`/projects/${result.projectid}`}   
             >   
               <ListGroupItem header={result.pname}>
               {"manager:"+result.pmanager+" "}
@@ -246,7 +246,7 @@ export default class ProjectsList extends Component {
         i !== 0
           ? <LinkContainer
               key={result.projectid}
-              to={`/project/${result.projectid}`}   
+              to={`/projects/${result.projectid}`}   
             >   
               <ListGroupItem header={result.pname}>
               {"manager:"+result.pmanager+" "}
